@@ -3,30 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./coloris.min.css">
+<title>Dot Editor - pixel create</title>
 </head>
 <body>
-<div class="base-container" id="baseContainer">
-  <div class="dot">1</div>
-</div>
+  <main>
+    <div class="base-container" id="baseContainer">
+      <div id="container"></div>
+    </div>
+    <nav class="util">
+      <ul>
+        <li><input type="text" id="dotColor" class="coloris" value="rgb(255, 0, 0)"></li>
+        <li><input type="file" id="dotDesign"></li>
+        <li>
+          <button onclick="designOn()">Design ON</button>
+          <button onclick="designOff()">Design OFF</button>
+        </li>
+        <li><button onclick="codeCopy()">Copy Container</button></li>
+      </ul>
+    </nav>
 
-<style>
-  *{padding:0;margin:0;}
-  .base-container {
-    border:1px solid red;
-    width:500px;
-    height:500px;
-    position: relative;
-    background-color: #ddd;
-  }
-  .dot {
-    width:10px;
-    height:10px;
-    background: #000;
-    position: absolute;
-  }
-</style>
-<script src="./dot_editor.js">
-</script>
+  </main>
+
+<script src="./coloris.min.js"></script>
+<script src="./dot_editor.js"></script>
 </body>
 </html>
