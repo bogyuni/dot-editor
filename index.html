@@ -10,15 +10,21 @@
 <body>
   <main>
     <div class="base-container" id="baseContainer">
+      <div id="status"></div>
       <div id="container"></div>
     </div>
     <nav class="util">
       <ul>
-        <li><input type="text" id="dotColor" class="coloris" value="rgb(255, 0, 0)"></li>
+        <li><input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)"></li>
         <li><input type="file" id="dotDesign"></li>
         <li>
           <button onclick="designOn()">Design ON</button>
           <button onclick="designOff()">Design OFF</button>
+        </li>
+        <li><button onclick="undo()">Undo</button></li>
+        <li>
+          <button onclick="deleteMode()">Delete</button>
+          <button onclick="createMode()">Create</button>
         </li>
         <li><button onclick="codeCopy()">Copy Container</button></li>
       </ul>
