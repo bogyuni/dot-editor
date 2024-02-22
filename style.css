@@ -11,10 +11,10 @@ main {
   position: relative;
 }
 
-.base-container #container {
+#container {
   border:1px solid red;
-  width:500px;
-  height:500px;
+  width:300px;
+  height:300px;
   position: relative;
   background-color: rgba(0,0,0,0.3);
 }
@@ -36,6 +36,15 @@ main {
 .util {
   padding: 1em;
 }
-.util li {
+.util dt {
+  font-size: 1.4em;
+}
+.util dd {
   margin-bottom: 1em;
+}
+.util .row {
+  padding:0.4em;
+}
+.util button {
+  padding:0.34em;
 }

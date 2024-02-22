@@ -13,33 +13,43 @@ Coloris.setInstance('.coloris', {
 
 const container = document.getElementById('container');
 const setValue = {
-  baseWidth: 500,
-  baseHeight: 500,
+  baseWidth: 300,
+  baseHeight: 300,
   dotWidth: 10,
   dotHeight: 10
 };
 let dotStatus = true;
 
+const setWidth = document.getElementById('setWidth');
+const setHeight = document.getElementById('setHeight');
 
-function createDot(e){
+function setSize() {
+  setValue.baseWidth = setWidth.value;
+  setValue.baseHeight = setHeight.value;
+  container.style = `width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;`;
+}
+
+// const dotColor = document.getElementById('dotColor').value;
+
+function insertDot(x, y, color) {
+  const dot = document.createElement('div');
+  dot.classList.add('dot');
+  dot.style.left = x+'px';
+  dot.style.top = y+'px';
+  dot.style.backgroundColor = color;
+  container.append(dot);
+}
+
+function createDot(e) {
   const posX = e.offsetX;
   const posY = e.offsetY;
   const dotX = Math.floor(posX / setValue.dotWidth) * setValue.dotWidth;
   const dotY = Math.floor(posY / setValue.dotHeight) * setValue.dotHeight;
   const dotColor = document.getElementById('dotColor').value;
 
-  function insertDot() {
-    const dot = document.createElement('div');
-    dot.classList.add('dot');
-    dot.style.left = dotX+'px';
-    dot.style.top = dotY+'px';
-    dot.style.backgroundColor = dotColor;
-    container.append(dot);
-  }
-
   if (dotStatus === true) {
     if (e.target === container) {
-      insertDot();
+      insertDot(dotX, dotY, dotColor);
     } else {
       e.target.style.backgroundColor = dotColor;
     }
@@ -90,8 +100,21 @@ function designOff() {
   container.style = '';
 }
 
+function paintFull() {
+  const dotW = setValue.dotWidth;
+  const dotH = setValue.dotHeight;
+  const rowMax = setValue.baseWidth / dotW;
+  const colMax = setValue.baseHeight / dotH;
+  const dotColor = document.getElementById('dotColor').value;
+  for (let i = 0; i < colMax; i++) {
+    for (let j = 0; j < rowMax; j++) {
+      insertDot(dotW*j, dotH*i, dotColor);
+    }
+  }
+}
+
 function codeCopy() {
-  const codeHTML = '<div class="pixelBox">'+container.innerHTML+"</div>";
+  const codeHTML = `<div class="pixelBox" style="overflow:hidden;position:relative;width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;">${container.innerHTML}</div>`;
   navigator.clipboard.writeText(codeHTML)
   .then(() => {
     console.log('Copied to clipboard : ' + codeHTML);

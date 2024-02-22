@@ -14,22 +14,63 @@
       <div id="container"></div>
     </div>
     <nav class="util">
-      <ul>
-        <li><input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)"></li>
-        <li><input type="file" id="dotDesign"></li>
-        <li>
-          <button onclick="designOn()">Design ON</button>
-          <button onclick="designOff()">Design OFF</button>
-        </li>
-        <li><button onclick="undo()">Undo</button></li>
-        <li>
-          <button onclick="deleteMode()">Delete</button>
-          <button onclick="createMode()">Create</button>
-        </li>
-        <li><button onclick="codeCopy()">Copy Container</button></li>
-      </ul>
+      <dl>
+        <dt>Box Size</dt>
+        <dd>
+          <div class="row">
+            <label for="">Width</label>:
+            <input type="text" id="setWidth">
+          </div>
+          <div class="row">
+            <label for="">Height</label>:
+            <input type="text" id="setHeight">
+          </div>
+          <div class="row">
+            <button onclick="setSize()">Set Size</button>
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Background</dt>
+        <dd>
+          <div class="row">
+            <input type="file" id="dotDesign">
+          </div>
+          <div class="row">
+            <button onclick="designOn()">Design ON</button>
+            <button onclick="designOff()">Design OFF</button>
+          </div>
+          <div class="row">
+            <button onclick="paintFull()">Paint Full</button>
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Dot option</dt>
+        <dd>
+          <div class="row">
+            <label for="">Color</label>:
+            <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
+          </div>
+          <div class="row">
+            <label for="">Insert Mode</label>:
+            <button onclick="deleteMode()">Delete</button>
+            <button onclick="createMode()">Create</button>
+          </div>
+          <div class="row">
+            <button onclick="undo()">Undo</button>
+          </div>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Print</dt>
+        <dd>
+          <div class="row">
+            <button onclick="codeCopy()">Copy Container</button>
+          </div>
+        </dd>
+      </dl>
     </nav>
-
   </main>
 
 <script src="./coloris.min.js"></script>
