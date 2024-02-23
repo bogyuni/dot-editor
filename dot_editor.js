@@ -26,10 +26,14 @@ const setHeight = document.getElementById('setHeight');
 function setSize() {
   setValue.baseWidth = setWidth.value;
   setValue.baseHeight = setHeight.value;
-  container.style = `width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;`;
+  container.style.width = `${setValue.baseWidth}px`;
+  container.style.height = `${setValue.baseHeight}px`;
 }
 
-// const dotColor = document.getElementById('dotColor').value;
+const dotColor = document.getElementById('dotColor');
+let dotColorVal = dotColor.value;
+
+
 
 function insertDot(x, y, color) {
   const dot = document.createElement('div');
@@ -45,13 +49,13 @@ function createDot(e) {
   const posY = e.offsetY;
   const dotX = Math.floor(posX / setValue.dotWidth) * setValue.dotWidth;
   const dotY = Math.floor(posY / setValue.dotHeight) * setValue.dotHeight;
-  const dotColor = document.getElementById('dotColor').value;
+  dotColorVal = dotColor.value;
 
   if (dotStatus === true) {
     if (e.target === container) {
-      insertDot(dotX, dotY, dotColor);
+      insertDot(dotX, dotY, dotColorVal);
     } else {
-      e.target.style.backgroundColor = dotColor;
+      e.target.style.backgroundColor = dotColorVal;
     }
   } else {
     if (e.target !== container) {
@@ -88,29 +92,60 @@ dotDesign.addEventListener('change', function(e){
   const fileReader = new FileReader();
   fileReader.readAsDataURL(file);
   fileReader.onload = function(){
-    designBackground = `background : url(${fileReader.result}); background-size : cover`;
-    container.style = designBackground;
+    designBackground = `url(${fileReader.result})`;
+    container.style.backgroundImage = designBackground;
+    container.style.backgroundPosition = '0px 0px';
+    container.style.backgroundSize = setValue.baseWidth+'px';
+    container.style.backgroundRepeat = 'no-repeat';
+
+    document.getElementById('sampleImg').src = fileReader.result;
   }
 });
 
 function designOn() {
-  container.style = designBackground;
+  container.style.backgroundImage = designBackground;
 }
 function designOff() {
-  container.style = '';
+  container.style.backgroundImage = '';
+}
+
+function openEyeDropper() {
+  const resultElement = document.getElementById("result");
+
+  if (!window.EyeDropper) {
+    resultElement.textContent = "Your browser does not support the EyeDropper API";
+    return;
+  }
+
+  const eyeDropper = new EyeDropper();
+
+  eyeDropper
+    .open()
+    .then((result) => {
+      resultElement.textContent = result.sRGBHex;
+      resultElement.style.backgroundColor = result.sRGBHex;
+      dotColor.value = result.sRGBHex;
+    })
+    .catch((e) => {
+      resultElement.textContent = e;
+    });
 }
 
 function paintFull() {
+  deleteAll();
   const dotW = setValue.dotWidth;
   const dotH = setValue.dotHeight;
   const rowMax = setValue.baseWidth / dotW;
   const colMax = setValue.baseHeight / dotH;
-  const dotColor = document.getElementById('dotColor').value;
+  dotColorVal = dotColor.value;
   for (let i = 0; i < colMax; i++) {
     for (let j = 0; j < rowMax; j++) {
-      insertDot(dotW*j, dotH*i, dotColor);
+      insertDot(dotW*j, dotH*i, dotColorVal);
     }
   }
+}
+function deleteAll() {
+  container.innerHTML = '';
 }
 
 function codeCopy() {

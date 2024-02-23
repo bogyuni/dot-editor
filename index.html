@@ -10,20 +10,20 @@
 <body>
   <main>
     <div class="base-container" id="baseContainer">
-      <div id="status"></div>
       <div id="container"></div>
     </div>
     <nav class="util">
+      <div id="status"></div>
       <dl>
         <dt>Box Size</dt>
         <dd>
           <div class="row">
-            <label for="">Width</label>:
-            <input type="text" id="setWidth">
+            <label for="setWidth">Width:</label>
+            <input type="text" id="setWidth" value="300">
           </div>
           <div class="row">
-            <label for="">Height</label>:
-            <input type="text" id="setHeight">
+            <label for="setHeight">Height:</label>
+            <input type="text" id="setHeight" value="300">
           </div>
           <div class="row">
             <button onclick="setSize()">Set Size</button>
@@ -42,6 +42,7 @@
           </div>
           <div class="row">
             <button onclick="paintFull()">Paint Full</button>
+            <button onclick="deleteAll()">Delete All</button>
           </div>
         </dd>
       </dl>
@@ -49,8 +50,13 @@
         <dt>Dot option</dt>
         <dd>
           <div class="row">
-            <label for="">Color</label>:
+            <label for="dotColor">Color</label>:
             <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
+          </div>
+          <div class="row">
+            <label for="">Pick:</label>
+            <button onclick="openEyeDropper()">Color Picker</button>
+            <span id="result"></span>
           </div>
           <div class="row">
             <label for="">Insert Mode</label>:
@@ -71,6 +77,9 @@
         </dd>
       </dl>
     </nav>
+    <div class="sample">
+      <img src="" alt="sample" id="sampleImg">
+    </div>
   </main>
 
 <script src="./coloris.min.js"></script>

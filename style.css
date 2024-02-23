@@ -12,11 +12,12 @@ main {
 }
 
 #container {
-  border:1px solid red;
+  border:1px solid #84bcda;
   width:300px;
   height:300px;
   position: relative;
   background-color: rgba(0,0,0,0.3);
+  overflow: hidden;
 }
 .dot {
   width:10px;
@@ -26,25 +27,28 @@ main {
 }
 
 #status {
-  position: absolute;
-  right: 10px;
-  top: 10px;
   font-size: 2em;
-  color: rgba(255,0,0,0.8);
+  color: rgba(255,0,0,1);
 }
 
 .util {
-  padding: 1em;
+  padding: 0 1em 1em;
+}
+.util dl {
+  margin-bottom: 1em;
 }
 .util dt {
   font-size: 1.4em;
 }
 .util dd {
-  margin-bottom: 1em;
 }
 .util .row {
   padding:0.4em;
 }
 .util button {
   padding:0.34em;
+}
+
+.sample img {
+  border: 1px dotted #84bcda;
 }
