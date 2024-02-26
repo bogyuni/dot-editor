@@ -19,15 +19,15 @@
         <dd>
           <div class="row">
             <label for="setWidth">Width:</label>
-            <input type="text" id="setWidth" value="300">
+            <input type="number" id="setWidth" value="300">
           </div>
           <div class="row">
             <label for="setHeight">Height:</label>
-            <input type="text" id="setHeight" value="300">
+            <input type="number" id="setHeight" value="300">
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <button onclick="setSize()">Set Size</button>
-          </div>
+          </div> -->
         </dd>
       </dl>
       <dl>
@@ -43,6 +43,20 @@
           <div class="row">
             <button onclick="paintFull()">Paint Full</button>
             <button onclick="deleteAll()">Delete All</button>
+          </div>
+          <div class="row">
+            <div class="col w50">
+              <label for="">X:</label>
+              <input type="number" value="0" id="bgX">
+            </div>
+            <div class="col w50">
+              <label for="">Y:</label>
+              <input type="number" value="0" id="bgY">
+            </div>
+          </div>
+          <div class="row">
+            <label for="">Size:</label>
+            <input type="number" value="300" id="bgW">
           </div>
         </dd>
       </dl>
