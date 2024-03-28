@@ -18,7 +18,10 @@ const setValue = {
   baseWidth: 300,
   baseHeight: 300,
   dotWidth: 10,
-  dotHeight: 10
+  dotHeight: 10,
+  dotCellX: 1,
+  dotCellY: 1,
+
 };
 // 도트 입력 / 지우기 온오프 값
 let dotStatus = true;
@@ -26,13 +29,6 @@ let dotStatus = true;
 // 컨테이너 사이즈 조정을 위한 인풋 선택자
 const setWidth = document.getElementById('setWidth');
 const setHeight = document.getElementById('setHeight');
-// 컨ㅔ이너 사이즈 변경 함수
-// function setSize() {
-//   setValue.baseWidth = setWidth.value;
-//   setValue.baseHeight = setHeight.value;
-//   container.style.width = `${setValue.baseWidth}px`;
-//   container.style.height = `${setValue.baseHeight}px`;
-// }
 setWidth.addEventListener('change', function(e) {
   setValue.baseWidth = e.target.value;
   container.style.width = `${setValue.baseWidth}px`;
@@ -46,6 +42,17 @@ setHeight.addEventListener('change', function(e) {
 const dotColor = document.getElementById('dotColor');
 // coloris 플러그인의 가변 설정 색상값
 let dotColorVal = dotColor.value;
+
+// 도트 칸을 지정하는 값
+const dotCellX = document.querySelector('#dotCellX');
+const dotCellY = document.querySelector('#dotCellY');
+dotCellX.addEventListener('change', function(e) {
+  setValue.dotCellX = e.target.value;
+});
+dotCellY.addEventListener('change', function(e) {
+  setValue.dotCellY = e.target.value;
+});
+
 
 // 도트 생성 함수
 function insertDot(x, y, color) {
@@ -69,7 +76,13 @@ function createDot(e) {
   if (dotStatus === true) {
     // 클릭 위치가 컨테이너일 때 즉 도트를 찍지 않았으면 도트를 생성
     if (e.target === container) {
-      insertDot(dotX, dotY, dotColorVal);
+      // insertDot(dotX, dotY, dotColorVal);
+
+      for (let i = 0; i < setValue.dotCellX; i++) {
+        for (let j = 0; j < setValue.dotCellY; j++) {
+          insertDot(dotX + (setValue.dotWidth * i), dotY + (setValue.dotHeight * j), dotColorVal);
+        }
+      }
     // 도트를 찍었다면 해당 도트의 생삭을 변경한다
     } else {
       e.target.style.backgroundColor = dotColorVal;

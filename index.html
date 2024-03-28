@@ -18,16 +18,34 @@
         <dt>Box Size</dt>
         <dd>
           <div class="row">
-            <label for="setWidth">Width:</label>
-            <input type="number" id="setWidth" value="300">
+            <div class="col w50">
+              <label for="setWidth">Width</label>
+              :
+              <input type="number" id="setWidth" value="300">
+            </div>
+            <div class="col w50">
+              <label for="setHeight">Height</label>
+              :
+              <input type="number" id="setHeight" value="300">
+            </div>
           </div>
           <div class="row">
-            <label for="setHeight">Height:</label>
-            <input type="number" id="setHeight" value="300">
+            <div class="col w50">
+              <label for="">X</label>
+              :
+              <input type="number" value="0" id="bgX">
+            </div>
+            <div class="col w50">
+              <label for="">Y</label>
+              :
+              <input type="number" value="0" id="bgY">
+            </div>
           </div>
-          <!-- <div class="row">
-            <button onclick="setSize()">Set Size</button>
-          </div> -->
+          <div class="row">
+            <label for="">Size</label>
+            :
+            <input type="number" value="300" id="bgW">
+          </div>
         </dd>
       </dl>
       <dl>
@@ -44,31 +62,30 @@
             <button onclick="paintFull()">Paint Full</button>
             <button onclick="deleteAll()">Delete All</button>
           </div>
-          <div class="row">
-            <div class="col w50">
-              <label for="">X:</label>
-              <input type="number" value="0" id="bgX">
-            </div>
-            <div class="col w50">
-              <label for="">Y:</label>
-              <input type="number" value="0" id="bgY">
-            </div>
-          </div>
-          <div class="row">
-            <label for="">Size:</label>
-            <input type="number" value="300" id="bgW">
-          </div>
         </dd>
       </dl>
       <dl>
         <dt>Dot option</dt>
         <dd>
           <div class="row">
+            <div class="col w50">
+              <label for="">Cell X</label>
+              :
+              <input type="number" value="1" id="dotCellX">
+            </div>
+            <div class="col w50">
+              <label for="">Cell Y</label>
+              :
+              <input type="number" value="1" id="dotCellY">
+            </div>
+          </div>
+          <div class="row">
             <label for="dotColor">Color</label>:
             <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
           </div>
           <div class="row">
-            <label for="">Pick:</label>
+            <label for="">Pick</label>
+            :
             <button onclick="openEyeDropper()">Color Picker</button>
             <span id="result"></span>
           </div>
@@ -76,9 +93,9 @@
             <label for="">Insert Mode</label>:
             <button onclick="deleteMode()">Delete</button>
             <button onclick="createMode()">Create</button>
+            <button onclick="undo()">Undo</button>
           </div>
           <div class="row">
-            <button onclick="undo()">Undo</button>
           </div>
         </dd>
       </dl>
