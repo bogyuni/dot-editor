@@ -11,6 +11,9 @@
   <main>
     <div class="base-container" id="baseContainer">
       <div id="container"></div>
+      <div class="guide-container" id="containerGuide">
+        <div class="guide-dot"></div>
+      </div>
     </div>
     <nav class="util">
       <div id="status"></div>
@@ -92,8 +95,9 @@
           <div class="row">
             <label for="">Insert Mode</label>:
             <button onclick="deleteMode()">Delete</button>
-            <button onclick="createMode()">Create</button>
+            <button onclick="createMode('mouse')">Create</button>
             <button onclick="undo()">Undo</button>
+            <button onclick="guideReset()">Guide Reset</button>
           </div>
           <div class="row">
           </div>

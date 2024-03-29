@@ -9,10 +9,15 @@
 main {
   display: flex;
   padding: 1em;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .base-container {
   position: relative;
+  display: flex;
 }
 
 #container {
@@ -33,6 +38,30 @@ main {
 #status {
   font-size: 2em;
   color: rgba(255,0,0,1);
+}
+
+.guide-container {
+  border:1px solid #84bcda;
+  width:300px;
+  height:300px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px);
+  background-size: 10px 10px, 10px 10px;
+  background-position: 0px 0px, 0px 0px;
+}
+.guide-container .guide-dot {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 2px dotted red;
+  box-sizing: border-box;
 }
 
 .util {

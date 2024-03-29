@@ -13,6 +13,7 @@ Coloris.setInstance('.coloris', {
 
 // 도트 컨테이너
 const container = document.getElementById('container');
+const containerGuide = document.getElementById('containerGuide');
 // 초기 설정 값
 const setValue = {
   baseWidth: 300,
@@ -25,17 +26,22 @@ const setValue = {
 };
 // 도트 입력 / 지우기 온오프 값
 let dotStatus = true;
+// 키보드 입력 모드
+let cellMoveStatus = false;
 
 // 컨테이너 사이즈 조정을 위한 인풋 선택자
 const setWidth = document.getElementById('setWidth');
 const setHeight = document.getElementById('setHeight');
+
 setWidth.addEventListener('change', function(e) {
   setValue.baseWidth = e.target.value;
   container.style.width = `${setValue.baseWidth}px`;
+  containerGuide.style.width = `${setValue.baseWidth}px`;
 });
 setHeight.addEventListener('change', function(e) {
   setValue.baseHeight = e.target.value;
   container.style.height = `${setValue.baseHeight}px`;
+  containerGuide.style.height = `${setValue.baseHeight}px`;
 });
 
 // coloris 플러그인의 인풋 선택자
@@ -103,13 +109,24 @@ container.addEventListener('click', createDot);
 
 // 도트 지우기 모드로 변경
 function deleteMode() {
+  containerGuide.style.display = 'none';
   dotStatus = false;
+  cellMoveStatus = false;
   document.getElementById('status').innerText = 'Delete Mode';
 }
-// 도트 입력 모드로 변경
-function createMode() {
-  dotStatus = true;
-  document.getElementById('status').innerText = '';
+// 도트 마우스 입력 모드로 변경
+function createMode(mode) {
+  if (mode === 'mouse') {
+    containerGuide.style.display = 'none';
+    dotStatus = true;
+    cellMoveStatus = false;
+    document.getElementById('status').innerText = 'Mouse Insert';
+  } else if (mode === 'key') {
+    containerGuide.style.display = 'block';
+    dotStatus = true;
+    cellMoveStatus = true;
+    document.getElementById('status').innerText = 'Key Insert';
+  }
 }
 
 // 마지막에 입력된 도트를 취소함
@@ -119,6 +136,11 @@ function undo() {
   } else {
     alert('취소 할 대상이 없음');
   }
+}
+
+function guideReset() {
+  guideDot.style.top = '0px';
+  guideDot.style.left = '0px';
 }
 
 // 도안(배경이미지) 파일 업로드 선택자
@@ -226,3 +248,34 @@ function codeCopy() {
     console.log('Something went wrong', err);
   })
 }
+
+const guideDot = document.querySelector('.guide-dot');
+
+// cell move 인서트 모드
+window.onkeydown = (e) => {
+  const key = e.key || e.keyCode;
+  if (key === 'k') {
+    createMode('key');
+  } else if (key === 'm') {
+    createMode('mouse');
+  } else if (key === 'd') {
+    deleteMode();
+  }
+
+  if (cellMoveStatus === true) {
+    if (key === 'ArrowUp') {
+      guideDot.style.top = guideDot.offsetTop - setValue.dotHeight + 'px'
+    } else if (key === 'ArrowRight') {
+      guideDot.style.left = guideDot.offsetLeft + setValue.dotWidth + 'px'
+    } else if (key === 'ArrowDown') {
+      guideDot.style.top = guideDot.offsetTop + setValue.dotHeight + 'px'
+    } else if (key === 'ArrowLeft') {
+      guideDot.style.left = guideDot.offsetLeft - setValue.dotWidth + 'px'
+    } else if (key === ' ') {
+      console.log('space');
+      insertDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
+    }
+  }
+
+  console.log(key);
+};
