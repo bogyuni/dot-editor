@@ -12,17 +12,16 @@ Coloris.setInstance('.coloris', {
 });
 
 // 도트 컨테이너
+const baseContainer = document.getElementById('baseContainer');
 const container = document.getElementById('container');
 const containerGuide = document.getElementById('containerGuide');
 // 초기 설정 값
 const setValue = {
   baseWidth: 300,
   baseHeight: 300,
-  dotWidth: 10,
-  dotHeight: 10,
+  dotSize: 10,
   dotCellX: 1,
   dotCellY: 1,
-
 };
 // 도트 입력 / 지우기 온오프 값
 let dotStatus = true;
@@ -44,10 +43,39 @@ setHeight.addEventListener('change', function(e) {
   containerGuide.style.height = `${setValue.baseHeight}px`;
 });
 
+// 컨테이너 스케일 조절
+let scaleVal = 1;
+function scaleRegulate(pos) {
+  if (pos === 'up') {
+    scaleVal += 0.1;
+    baseContainer.style.scale = scaleVal;
+  } else {
+    if (scaleVal > 1) {
+      scaleVal -= 0.1;
+      baseContainer.style.scale = scaleVal;
+    }
+  }
+  document.querySelector('#sacleCurrent').innerText = scaleVal.toFixed(1);
+}
+
 // coloris 플러그인의 인풋 선택자
 const dotColor = document.getElementById('dotColor');
 // coloris 플러그인의 가변 설정 색상값
 let dotColorVal = dotColor.value;
+
+// 도트의 사이즈 지정, 기본 값은 10
+const dotSize = document.querySelector('#dotSize');
+
+function dotSizeApply() {
+  setValue.dotSize = parseInt(dotSize.value);
+  document.body.insertAdjacentHTML('beforeend',
+    `<style>
+      .guide-container{background-size: ${setValue.dotSize}px ${setValue.dotSize}px, ${setValue.dotSize}px ${setValue.dotSize}px;}
+      .guide-container .guide-dot{width:${setValue.dotSize}px;height:${setValue.dotSize}px;}
+      .dot{width:${setValue.dotSize}px;height:${setValue.dotSize}px;}
+    </style>`
+  );
+}
 
 // 도트 칸을 지정하는 값
 const dotCellX = document.querySelector('#dotCellX');
@@ -74,8 +102,8 @@ function createDot(e) {
   // 도트가 찍힐 위치값 지정
   const posX = e.offsetX;
   const posY = e.offsetY;
-  const dotX = Math.floor(posX / setValue.dotWidth) * setValue.dotWidth;
-  const dotY = Math.floor(posY / setValue.dotHeight) * setValue.dotHeight;
+  const dotX = Math.floor(posX / setValue.dotSize) * setValue.dotSize;
+  const dotY = Math.floor(posY / setValue.dotSize) * setValue.dotSize;
   dotColorVal = dotColor.value;
 
   // 도트 입력 상태일 때
@@ -86,7 +114,7 @@ function createDot(e) {
 
       for (let i = 0; i < setValue.dotCellX; i++) {
         for (let j = 0; j < setValue.dotCellY; j++) {
-          insertDot(dotX + (setValue.dotWidth * i), dotY + (setValue.dotHeight * j), dotColorVal);
+          insertDot(dotX + (setValue.dotSize * i), dotY + (setValue.dotSize * j), dotColorVal);
         }
       }
     // 도트를 찍었다면 해당 도트의 생삭을 변경한다
@@ -216,9 +244,9 @@ function openEyeDropper() {
 function paintFull() {
   const confirmCheck = confirm('Really?');
   if (confirmCheck) {
-    deleteAll();
-    const dotW = setValue.dotWidth;
-    const dotH = setValue.dotHeight;
+    container.innerHTML = '';
+    const dotW = setValue.dotSize;
+    const dotH = setValue.dotSize;
     const rowMax = setValue.baseWidth / dotW;
     const colMax = setValue.baseHeight / dotH;
     dotColorVal = dotColor.value;
@@ -239,7 +267,17 @@ function deleteAll() {
 
 // 도트를 클립보드에 복사하는 함수
 function codeCopy() {
-  const codeHTML = `<div class="pixelBox" style="overflow:hidden;position:relative;width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;">${container.innerHTML}</div>`;
+  const pixelNameVal = document.querySelector('#pixelName').value;
+  let pixelName = '';
+
+  if (pixelNameVal === '' || pixelNameVal === ' ' || pixelNameVal === null) {
+    pixelName = 'pixelBox';
+  } else {
+    pixelName = pixelNameVal;
+  }
+
+  const cssAdd = `<style>.${pixelName} > .dot{position:absolute;width:${setValue.dotSize}px !important;height:${setValue.dotSize}px !important;}</style>`;
+  const codeHTML = `${cssAdd}\n<div class="${pixelName}" style="overflow:hidden;position:relative;width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;">${container.innerHTML}</div>`;
   navigator.clipboard.writeText(codeHTML)
   .then(() => {
     console.log('Copied to clipboard : ' + codeHTML);
@@ -264,18 +302,37 @@ window.onkeydown = (e) => {
 
   if (cellMoveStatus === true) {
     if (key === 'ArrowUp') {
-      guideDot.style.top = guideDot.offsetTop - setValue.dotHeight + 'px'
+      guideDot.style.top = guideDot.offsetTop - setValue.dotSize + 'px'
     } else if (key === 'ArrowRight') {
-      guideDot.style.left = guideDot.offsetLeft + setValue.dotWidth + 'px'
+      guideDot.style.left = guideDot.offsetLeft + setValue.dotSize + 'px'
     } else if (key === 'ArrowDown') {
-      guideDot.style.top = guideDot.offsetTop + setValue.dotHeight + 'px'
+      guideDot.style.top = guideDot.offsetTop + setValue.dotSize + 'px'
     } else if (key === 'ArrowLeft') {
-      guideDot.style.left = guideDot.offsetLeft - setValue.dotWidth + 'px'
+      guideDot.style.left = guideDot.offsetLeft - setValue.dotSize + 'px'
     } else if (key === ' ') {
       console.log('space');
       insertDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
     }
   }
 
-  console.log(key);
+  // console.log(
+  //   typeof guideDot.offsetTop, guideDot.offsetTop,
+  //   typeof setValue.dotSize, setValue.dotSize,
+
+  //   'left: ' + guideDot.style.left
+  // )
 };
+
+const dtTag = document.querySelectorAll('dt');
+
+for (let i = 0; i < dtTag.length; i++) {
+  dtTag[i].addEventListener('click', function(e) {
+    console.log(this.classList.contains('hidden'));
+    if ( this.classList.contains('hidden') ) {
+      this.classList.remove('hidden');
+    } else {
+      this.classList.add('hidden');
+    }
+  });
+}
+

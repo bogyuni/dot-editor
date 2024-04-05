@@ -6,18 +6,30 @@
   width: 50%;
 }
 
+button {
+  padding:0.34em;
+  margin-left: 4px;
+}
+
 main {
-  display: flex;
+  /* display: flex; */
   padding: 1em;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
+  position: relative;
+}
+
+.scale-option {
+  margin-bottom: 1em;
 }
 
 .base-container {
   position: relative;
-  display: flex;
+  transform-origin: left top;
+  scale: 1;
+  display: inline-block;
 }
 
 #container {
@@ -65,16 +77,28 @@ main {
 }
 
 .util {
-  padding: 0 1em 1em;
+  padding: 1em;
+  position: fixed;
+  right: 0;
+  top: 0;
+  border: 1px solid red;
 }
 .util dl {
   margin-bottom: 1em;
 }
 .util dt {
   font-size: 1.4em;
+  cursor: pointer;
 }
 .util dd {
+  overflow: hidden;
+  border-bottom : 1px solid red;
 }
+.util dt.hidden + dd {
+  height: 1px;
+}
+
+
 .util .row {
   display: flex;
   padding:0.4em;
@@ -93,11 +117,10 @@ main {
 .util input {
   margin-left: 4px;
 }
-.util button {
-  padding:0.34em;
-  margin-left: 4px;
-}
 
+.sample {
+  display: none;
+}
 .sample img {
   border: 1px dotted #84bcda;
   width: 200%;

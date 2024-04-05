@@ -9,6 +9,11 @@
 </head>
 <body>
   <main>
+    <div class="scale-option">
+      <button onclick="scaleRegulate('down')">Down - </button>
+      <button onclick="scaleRegulate('up')">Up + </button>
+      <span id="sacleCurrent">1</span>
+    </div>
     <div class="base-container" id="baseContainer">
       <div id="container"></div>
       <div class="guide-container" id="containerGuide">
@@ -71,6 +76,13 @@
         <dt>Dot option</dt>
         <dd>
           <div class="row">
+            <div class="col">
+              <label for="">Size</label>:
+              <input type="number" value="10" id="dotSize">
+              <button onclick="dotSizeApply()">Dot Size Apply</button>
+            </div>
+          </div>
+          <div class="row">
             <div class="col w50">
               <label for="">Cell X</label>
               :
@@ -95,7 +107,8 @@
           <div class="row">
             <label for="">Insert Mode</label>:
             <button onclick="deleteMode()">Delete</button>
-            <button onclick="createMode('mouse')">Create</button>
+            <button onclick="createMode('mouse')">Mouse</button>
+            <button onclick="createMode('key')">Key</button>
             <button onclick="undo()">Undo</button>
             <button onclick="guideReset()">Guide Reset</button>
           </div>
@@ -107,7 +120,13 @@
         <dt>Print</dt>
         <dd>
           <div class="row">
-            <button onclick="codeCopy()">Copy Container</button>
+            <div class="col w50">
+              <label for="">Name</label>:
+              <input type="text" id="pixelName" placeholder="Name">
+            </div>
+            <div class="col w50">
+              <button onclick="codeCopy()">Copy Container</button>
+            </div>
           </div>
         </dd>
       </dl>
