@@ -298,7 +298,11 @@ window.onkeydown = (e) => {
     createMode('mouse');
   } else if (key === 'd') {
     deleteMode();
+  } else if (key === 'Escape') {
+    document.getElementById('guideDot').focus();
   }
+
+	console.log(key);
 
   if (cellMoveStatus === true) {
     if (key === 'ArrowUp') {
