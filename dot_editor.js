@@ -161,6 +161,7 @@ function createMode(mode) {
 function undo() {
   if (container.lastChild){
     container.removeChild(container.lastChild);
+    cellMemory.pop();
   } else {
     alert('취소 할 대상이 없음');
   }
@@ -289,6 +290,9 @@ function codeCopy() {
 
 const guideDot = document.querySelector('.guide-dot');
 
+const cellMemory = [];
+let cellCount = 0;
+
 // cell move 인서트 모드
 window.onkeydown = (e) => {
   const key = e.key || e.keyCode;
@@ -314,8 +318,17 @@ window.onkeydown = (e) => {
     } else if (key === 'ArrowLeft') {
       guideDot.style.left = guideDot.offsetLeft - setValue.dotSize + 'px'
     } else if (key === ' ') {
-      console.log('space');
-      insertDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
+      const dotIdText = guideDot.offsetLeft.toString()+guideDot.offsetTop.toString();
+
+      console.log(cellMemory.includes(dotIdText));
+      if (cellMemory.includes(dotIdText) === false) {
+        cellMemory[cellCount] = dotIdText;
+        cellCount++;
+        insertDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
+      } else {
+        alert('중복 셀');
+      }
+
     }
   }
 
