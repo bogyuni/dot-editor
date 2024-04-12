@@ -1,142 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./style.css">
-<link rel="stylesheet" href="./coloris.min.css">
-<title>Dot Editor - pixel create</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/css/coloris.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>Dot Editor - pixel create</title>
 </head>
 <body>
-  <main>
-    <div class="scale-option">
-      <button onclick="scaleRegulate('down')">Down - </button>
-      <button onclick="scaleRegulate('up')">Up + </button>
-      <span id="sacleCurrent">1</span>
+<main>
+  <div class="scale-option">
+    <button onclick="scaleRegulate('down')">Down - </button>
+    <button onclick="scaleRegulate('up')">Up + </button>
+    <span id="sacleCurrent">1</span>
+  </div>
+  <div class="base-container" id="baseContainer">
+    <div id="container"></div>
+    <div class="guide-container" id="containerGuide">
+      <div class="guide-dot" id="guideDot" tabindex="0"></div>
     </div>
-    <div class="base-container" id="baseContainer">
-      <div id="container"></div>
-      <div class="guide-container" id="containerGuide">
-        <div class="guide-dot" id="guideDot" tabindex="0"></div>
-      </div>
-    </div>
-    <nav class="util">
-      <div id="status"></div>
-      <dl>
-        <dt>Box Size</dt>
-        <dd>
-          <div class="row">
-            <div class="col w50">
-              <label for="setWidth">Width</label>
-              :
-              <input type="number" id="setWidth" value="300">
-            </div>
-            <div class="col w50">
-              <label for="setHeight">Height</label>
-              :
-              <input type="number" id="setHeight" value="300">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col w50">
-              <label for="">X</label>
-              :
-              <input type="number" value="0" id="bgX">
-            </div>
-            <div class="col w50">
-              <label for="">Y</label>
-              :
-              <input type="number" value="0" id="bgY">
-            </div>
-          </div>
-          <div class="row">
-            <label for="">Size</label>
+  </div>
+  <nav class="util">
+    <div id="status"></div>
+    <dl>
+      <dt>Box Size</dt>
+      <dd>
+        <div class="row">
+          <div class="col w50">
+            <label for="setWidth">Width</label>
             :
-            <input type="number" value="300" id="bgW">
+            <input type="number" id="setWidth" value="300">
           </div>
-        </dd>
-      </dl>
-      <dl>
-        <dt>Background</dt>
-        <dd>
-          <div class="row">
-            <input type="file" id="dotDesign">
-          </div>
-          <div class="row">
-            <button onclick="designOn()">Design ON</button>
-            <button onclick="designOff()">Design OFF</button>
-          </div>
-          <div class="row">
-            <button onclick="paintFull()">Paint Full</button>
-            <button onclick="deleteAll()">Delete All</button>
-          </div>
-        </dd>
-      </dl>
-      <dl>
-        <dt>Dot option</dt>
-        <dd>
-          <div class="row">
-            <div class="col">
-              <label for="">Size</label>:
-              <input type="number" value="10" id="dotSize">
-              <button onclick="dotSizeApply()">Dot Size Apply</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col w50">
-              <label for="">Cell X</label>
-              :
-              <input type="number" value="1" id="dotCellX">
-            </div>
-            <div class="col w50">
-              <label for="">Cell Y</label>
-              :
-              <input type="number" value="1" id="dotCellY">
-            </div>
-          </div>
-          <div class="row">
-            <label for="dotColor">Color</label>:
-            <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
-          </div>
-          <div class="row">
-            <label for="">Pick</label>
+          <div class="col w50">
+            <label for="setHeight">Height</label>
             :
-            <button onclick="openEyeDropper()">Color Picker</button>
-            <span id="result"></span>
+            <input type="number" id="setHeight" value="300">
           </div>
-          <div class="row">
-            <label for="">Insert Mode</label>:
-            <button onclick="deleteMode()">Delete</button>
-            <button onclick="createMode('mouse')">Mouse</button>
-            <button onclick="createMode('key')">Key</button>
-            <button onclick="undo()">Undo</button>
-            <button onclick="guideReset()">Guide Reset</button>
+        </div>
+        <div class="row">
+          <div class="col w50">
+            <label for="">X</label>
+            :
+            <input type="number" value="0" id="bgX">
           </div>
-          <div class="row">
+          <div class="col w50">
+            <label for="">Y</label>
+            :
+            <input type="number" value="0" id="bgY">
           </div>
-        </dd>
-      </dl>
-      <dl>
-        <dt>Print</dt>
-        <dd>
-          <div class="row">
-            <div class="col w50">
-              <label for="">Name</label>:
-              <input type="text" id="pixelName" placeholder="Name">
-            </div>
-            <div class="col w50">
-              <button onclick="codeCopy()">Copy Container</button>
-            </div>
+        </div>
+        <div class="row">
+          <label for="">Size</label>
+          :
+          <input type="number" value="300" id="bgW">
+        </div>
+      </dd>
+    </dl>
+    <dl>
+      <dt>Background</dt>
+      <dd>
+        <div class="row">
+          <input type="file" id="dotDesign">
+        </div>
+        <div class="row">
+          <button onclick="designOn()">Design ON</button>
+          <button onclick="designOff()">Design OFF</button>
+        </div>
+        <div class="row">
+          <button onclick="paintFull()">Paint Full</button>
+          <button onclick="deleteAll()">Delete All</button>
+        </div>
+      </dd>
+    </dl>
+    <dl>
+      <dt>Dot option</dt>
+      <dd>
+        <div class="row">
+          <div class="col">
+            <label for="">Size</label>:
+            <input type="number" value="10" id="dotSize">
+            <button onclick="dotSizeApply()">Dot Size Apply</button>
           </div>
-        </dd>
-      </dl>
-    </nav>
-    <div class="sample">
-      <img src="" alt="sample" id="sampleImg">
-    </div>
-  </main>
+        </div>
+        <div class="row">
+          <div class="col w50">
+            <label for="">Cell X</label>
+            :
+            <input type="number" value="1" id="dotCellX">
+          </div>
+          <div class="col w50">
+            <label for="">Cell Y</label>
+            :
+            <input type="number" value="1" id="dotCellY">
+          </div>
+        </div>
+        <div class="row">
+          <label for="dotColor">Color</label>:
+          <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
+        </div>
+        <div class="row">
+          <label for="">Pick</label>
+          :
+          <!-- <button onclick="openEyeDropper()" id="openEyeDropper">Color Picker</button> -->
+          <button id="openEyeDropper">Color Picker</button>
+          <span id="result"></span>
+        </div>
+        <div class="row">
+          <label for="">Insert Mode</label>:
+          <button onclick="deleteMode()">Delete</button>
+          <button onclick="createMode('mouse')">Mouse</button>
+          <button onclick="createMode('key')">Key</button>
+          <button onclick="undo()">Undo</button>
+          <button onclick="guideReset()">Guide Reset</button>
+        </div>
+        <div class="row">
+        </div>
+      </dd>
+    </dl>
+    <dl>
+      <dt>Print</dt>
+      <dd>
+        <div class="row">
+          <div class="col w50">
+            <label for="">Name</label>:
+            <input type="text" id="pixelName" placeholder="Name">
+          </div>
+          <div class="col w50">
+            <button onclick="codeCopy()">Copy Container</button>
+          </div>
+        </div>
+      </dd>
+    </dl>
+  </nav>
+  <div class="sample">
+    <img src="" alt="sample" id="sampleImg">
+  </div>
+</main>
 
-<script src="./coloris.min.js"></script>
-<script src="./dot_editor.js"></script>
+<script src="./assets/js/coloris.min.js"></script>
+<script src="./assets/js/dot_editor.js" type="module"></script>
 </body>
 </html>

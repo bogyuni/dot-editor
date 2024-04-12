@@ -1,15 +1,24 @@
 // 컬러픽커 플러그인 설정
-Coloris({
-  el: '.coloris',
-});
-Coloris.setInstance('.coloris', {
-  theme: 'pill',
-  themeMode: 'dark',
-  formatToggle: true,
-  closeButton: true,
-  clearButton: true,
-  swatches: [ '#067bc2', '#84bcda', '#80e377', '#ecc30b', '#f37748', '#d56062' ]
-});
+// Coloris({
+//   el: '.coloris',
+// });
+// Coloris.setInstance('.coloris', {
+//   theme: 'pill',
+//   themeMode: 'dark',
+//   formatToggle: true,
+//   closeButton: true,
+//   clearButton: true,
+//   swatches: [ '#067bc2', '#84bcda', '#80e377', '#ecc30b', '#f37748', '#d56062' ]
+// });
+
+import { setting } from './setting.js';
+
+setting();
+
+console.log(setting);
+// openEyeDropper();
+
+document.getElementById('openEyeDropper').addEventListener('click', setting.openEyeDropper);
 
 // 도트 컨테이너
 const baseContainer = document.getElementById('baseContainer');
@@ -218,27 +227,27 @@ bgW.addEventListener('change', function(e){
 
 
 // 도안의 컬러값을 출력하기 위해 화면 색상값을 입력받는 함수
-function openEyeDropper() {
-  const resultElement = document.getElementById("result");
+// function openEyeDropper() {
+//   const resultElement = document.getElementById("result");
 
-  if (!window.EyeDropper) {
-    resultElement.textContent = "Your browser does not support the EyeDropper API";
-    return;
-  }
+//   if (!window.EyeDropper) {
+//     resultElement.textContent = "Your browser does not support the EyeDropper API";
+//     return;
+//   }
 
-  const eyeDropper = new EyeDropper();
+//   const eyeDropper = new EyeDropper();
 
-  eyeDropper
-    .open()
-    .then((result) => {
-      resultElement.textContent = result.sRGBHex;
-      resultElement.style.backgroundColor = result.sRGBHex;
-      dotColor.value = result.sRGBHex;
-    })
-    .catch((e) => {
-      resultElement.textContent = e;
-    });
-}
+//   eyeDropper
+//     .open()
+//     .then((result) => {
+//       resultElement.textContent = result.sRGBHex;
+//       resultElement.style.backgroundColor = result.sRGBHex;
+//       dotColor.value = result.sRGBHex;
+//     })
+//     .catch((e) => {
+//       resultElement.textContent = e;
+//     });
+// }
 
 // 한가지 색상으로 모든 도트를 채우는 함수
 function paintFull() {
@@ -320,39 +329,24 @@ window.onkeydown = (e) => {
     } else if (key === 'ArrowLeft') {
       guideDot.style.left = guideDot.offsetLeft - setValue.dotSize + 'px'
     } else if (key === ' ') {
+      const dotIdText = guideDot.offsetLeft.toString() + guideDot.offsetTop.toString();
 
-
-      const dotIdText = guideDot.offsetLeft.toString()+guideDot.offsetTop.toString();
-      
       if (cellMemory.includes(dotIdText) === false) {
-
-
         insertDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
         const dots = document.querySelectorAll('.dot')[cellCount];
-        
         cellMemory[cellCount] = dotIdText;
         cellDom[cellCount] = dots;
-
-        console.log(cellMemory, cellDom);
-
         cellCount++;
-
-
       } else {
         const thisCellNum = cellMemory.indexOf(dotIdText);
-        console.log(cellMemory.indexOf(dotIdText), cellDom[thisCellNum]);
-
         cellDom[thisCellNum].style.backgroundColor = dotColor.value;
-
-        // cellDom[cellCount].style.backgroundColor = dotColor.value;
-
-        // e.target.style.backgroundColor = dotColor.value;
-        // alert('중복 셀');
       }
     }
   }
 };
 
+
+// 메뉴 접기 펼치기
 const dtTag = document.querySelectorAll('dt');
 
 for (let i = 0; i < dtTag.length; i++) {
