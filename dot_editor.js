@@ -60,8 +60,6 @@ function scaleRegulate(pos) {
 
 // coloris 플러그인의 인풋 선택자
 const dotColor = document.getElementById('dotColor');
-// coloris 플러그인의 가변 설정 색상값
-let dotColorVal = dotColor.value;
 
 // 도트의 사이즈 지정, 기본 값은 10
 const dotSize = document.querySelector('#dotSize');
@@ -104,22 +102,21 @@ function createDot(e) {
   const posY = e.offsetY;
   const dotX = Math.floor(posX / setValue.dotSize) * setValue.dotSize;
   const dotY = Math.floor(posY / setValue.dotSize) * setValue.dotSize;
-  dotColorVal = dotColor.value;
 
   // 도트 입력 상태일 때
   if (dotStatus === true) {
     // 클릭 위치가 컨테이너일 때 즉 도트를 찍지 않았으면 도트를 생성
     if (e.target === container) {
-      // insertDot(dotX, dotY, dotColorVal);
+      // insertDot(dotX, dotY, dotColor.value);
 
       for (let i = 0; i < setValue.dotCellX; i++) {
         for (let j = 0; j < setValue.dotCellY; j++) {
-          insertDot(dotX + (setValue.dotSize * i), dotY + (setValue.dotSize * j), dotColorVal);
+          insertDot(dotX + (setValue.dotSize * i), dotY + (setValue.dotSize * j), dotColor.value);
         }
       }
     // 도트를 찍었다면 해당 도트의 생삭을 변경한다
     } else {
-      e.target.style.backgroundColor = dotColorVal;
+      e.target.style.backgroundColor = dotColor.value;
     }
   // 도트 지우기 상태일 때
   } else {
@@ -162,6 +159,8 @@ function undo() {
   if (container.lastChild){
     container.removeChild(container.lastChild);
     cellMemory.pop();
+    cellDom.pop();
+    cellCount--;
   } else {
     alert('취소 할 대상이 없음');
   }
@@ -250,10 +249,9 @@ function paintFull() {
     const dotH = setValue.dotSize;
     const rowMax = setValue.baseWidth / dotW;
     const colMax = setValue.baseHeight / dotH;
-    dotColorVal = dotColor.value;
     for (let i = 0; i < colMax; i++) {
       for (let j = 0; j < rowMax; j++) {
-        insertDot(dotW*j, dotH*i, dotColorVal);
+        insertDot(dotW*j, dotH*i, dotColor.value);
       }
     }
   }
@@ -263,6 +261,9 @@ function deleteAll() {
   const confirmCheck = confirm('Really?');
   if (confirmCheck) {
     container.innerHTML = '';
+    cellMemory = [];
+    cellDom = [];
+    cellCount = 0;
   }
 }
 
@@ -290,7 +291,8 @@ function codeCopy() {
 
 const guideDot = document.querySelector('.guide-dot');
 
-const cellMemory = [];
+let cellMemory = [];
+let cellDom = [];
 let cellCount = 0;
 
 // cell move 인서트 모드
@@ -306,7 +308,7 @@ window.onkeydown = (e) => {
     document.getElementById('guideDot').focus();
   }
 
-	console.log(key);
+	// console.log(key);
 
   if (cellMoveStatus === true) {
     if (key === 'ArrowUp') {
@@ -318,17 +320,35 @@ window.onkeydown = (e) => {
     } else if (key === 'ArrowLeft') {
       guideDot.style.left = guideDot.offsetLeft - setValue.dotSize + 'px'
     } else if (key === ' ') {
+
+
       const dotIdText = guideDot.offsetLeft.toString()+guideDot.offsetTop.toString();
-
-      console.log(cellMemory.includes(dotIdText));
+      
       if (cellMemory.includes(dotIdText) === false) {
-        cellMemory[cellCount] = dotIdText;
-        cellCount++;
-        insertDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
-      } else {
-        alert('중복 셀');
-      }
 
+
+        insertDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
+        const dots = document.querySelectorAll('.dot')[cellCount];
+        
+        cellMemory[cellCount] = dotIdText;
+        cellDom[cellCount] = dots;
+
+        console.log(cellMemory, cellDom);
+
+        cellCount++;
+
+
+      } else {
+        const thisCellNum = cellMemory.indexOf(dotIdText);
+        console.log(cellMemory.indexOf(dotIdText), cellDom[thisCellNum]);
+
+        cellDom[thisCellNum].style.backgroundColor = dotColor.value;
+
+        // cellDom[cellCount].style.backgroundColor = dotColor.value;
+
+        // e.target.style.backgroundColor = dotColor.value;
+        // alert('중복 셀');
+      }
     }
   }
 
