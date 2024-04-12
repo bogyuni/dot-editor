@@ -351,13 +351,6 @@ window.onkeydown = (e) => {
       }
     }
   }
-
-  // console.log(
-  //   typeof guideDot.offsetTop, guideDot.offsetTop,
-  //   typeof setValue.dotSize, setValue.dotSize,
-
-  //   'left: ' + guideDot.style.left
-  // )
 };
 
 const dtTag = document.querySelectorAll('dt');
