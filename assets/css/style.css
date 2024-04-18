@@ -41,8 +41,8 @@ main {
   overflow: hidden;
 }
 .dot {
-  width:10px;
-  height:10px;
+  width:5px;
+  height:5px;
   background: #000;
   position: absolute;
 }
@@ -63,12 +63,12 @@ main {
   background-image:
     linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px);
-  background-size: 10px 10px, 10px 10px;
+  background-size: 5px 5px, 5px 5px;
   background-position: 0px 0px, 0px 0px;
 }
 .guide-container .guide-dot {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
   position: absolute;
   left: 0;
   top: 0;

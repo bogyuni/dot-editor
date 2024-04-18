@@ -2,29 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Dot Editor - pixel create</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./assets/css/coloris.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
-  <title>Dot Editor - pixel create</title>
 </head>
 <body>
 <main>
   <div class="scale-option">
-    <button onclick="scaleRegulate('down')">Down - </button>
-    <button onclick="scaleRegulate('up')">Up + </button>
+    <button onclick="designOnOff()" id="designOnOff">Design ON</button>
+
+    <button onclick="scaleRegulate('down')">Sacle Down</button>
+    <button onclick="scaleRegulate('up')">Sacle Up</button>
     <span id="sacleCurrent">1</span>
   </div>
   <div class="base-container" id="baseContainer">
     <div id="container"></div>
-    <div class="guide-container" id="containerGuide">
+    <div class="guide-container" id="guideContainer">
       <div class="guide-dot" id="guideDot" tabindex="0"></div>
     </div>
   </div>
+
   <nav class="util">
-    <div id="status"></div>
+    <div id="status">Mode</div>
     <dl>
-      <dt>Box Size</dt>
+      <dt>Setting</dt>
       <dd>
+        <div class="row">
+          <input type="file" id="dotDesign">
+        </div>
         <div class="row">
           <div class="col w50">
             <label for="setWidth">Width</label>
@@ -50,38 +56,21 @@
           </div>
         </div>
         <div class="row">
-          <label for="">Size</label>
+          <label for="">BG Size</label>
           :
           <input type="number" value="300" id="bgW">
         </div>
-      </dd>
-    </dl>
-    <dl>
-      <dt>Background</dt>
-      <dd>
         <div class="row">
-          <input type="file" id="dotDesign">
+          <label for="">Dot Size</label>:
+          <input type="number" value="5" id="dotSize">
+          <button onclick="dotSizeApply()">Dot Size Apply</button>
         </div>
-        <div class="row">
-          <button onclick="designOn()">Design ON</button>
-          <button onclick="designOff()">Design OFF</button>
-        </div>
-        <div class="row">
-          <button onclick="paintFull()">Paint Full</button>
-          <button onclick="deleteAll()">Delete All</button>
-        </div>
+
       </dd>
     </dl>
     <dl>
       <dt>Dot option</dt>
       <dd>
-        <div class="row">
-          <div class="col">
-            <label for="">Size</label>:
-            <input type="number" value="10" id="dotSize">
-            <button onclick="dotSizeApply()">Dot Size Apply</button>
-          </div>
-        </div>
         <div class="row">
           <div class="col w50">
             <label for="">Cell X</label>
@@ -101,19 +90,29 @@
         <div class="row">
           <label for="">Pick</label>
           :
-          <!-- <button onclick="openEyeDropper()" id="openEyeDropper">Color Picker</button> -->
-          <button id="openEyeDropper">Color Picker</button>
+          <button onclick="openEyeDropper()">Color Picker</button>
           <span id="result"></span>
         </div>
         <div class="row">
-          <label for="">Insert Mode</label>:
-          <button onclick="deleteMode()">Delete</button>
-          <button onclick="createMode('mouse')">Mouse</button>
+          <label for="">Mode</label>:
           <button onclick="createMode('key')">Key</button>
+          <button onclick="createMode('mouse')">Mouse</button>
+          <button onclick="createMode('delete')">Delete</button>
           <button onclick="undo()">Undo</button>
           <button onclick="guideReset()">Guide Reset</button>
         </div>
         <div class="row">
+        </div>
+      </dd>
+    </dl>
+    <dl>
+      <dt>Background</dt>
+      <dd>
+        <div class="row">
+        </div>
+        <div class="row">
+          <button onclick="paintFull()">Paint Full</button>
+          <button onclick="deleteAll()">Delete All</button>
         </div>
       </dd>
     </dl>
@@ -132,9 +131,6 @@
       </dd>
     </dl>
   </nav>
-  <div class="sample">
-    <img src="" alt="sample" id="sampleImg">
-  </div>
 </main>
 
 <script src="./assets/js/coloris.min.js"></script>
