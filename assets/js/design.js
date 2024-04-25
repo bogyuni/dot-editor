@@ -6,6 +6,8 @@ export default function design(size) {
   const dotDesign = document.getElementById('dotDesign');
   // 도안 이미지는 변수에 담아서 변경할 수 있다
   let designBackground = '';
+  // 도안 이미지 온오프 값
+  let designStatus = true;
 
   // 도안 파일이 업로드 되면 실행
   dotDesign.addEventListener('change', function(e){
@@ -22,19 +24,17 @@ export default function design(size) {
     }
   });
 
-  let designStatus = true;
-
   // 도안(배경 이미지)을 온오프하는 함수들
   window.designOnOff = () => {
     if (designStatus === false) {
       container.style.backgroundImage = designBackground;
-      document.getElementById('designOnOff').innerText = 'Design On';
+      document.getElementById('designOnOff').innerText = 'Design Off';
     } else {
       container.style.backgroundImage = '';
-      document.getElementById('designOnOff').innerText = 'Design Off';
+      document.getElementById('designOnOff').innerText = 'Design On';
     }
     designStatus = !designStatus;
   }
 
-  console.log('Module - design loaded');
+  console.log('Module loaded - Design');
 }

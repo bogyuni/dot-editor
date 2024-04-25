@@ -9,128 +9,121 @@
 </head>
 <body>
 <main>
-  <div class="scale-option">
-    <button onclick="designOnOff()" id="designOnOff">Design ON</button>
-
+  <article class="scale-option">
+    <button onclick="designOnOff()" id="designOnOff">Design Off</button>
     <button onclick="scaleRegulate('down')">Sacle Down</button>
     <button onclick="scaleRegulate('up')">Sacle Up</button>
-    <span id="sacleCurrent">1</span>
-  </div>
+    <span id="sacleCurrent">2.0</span>
+  </article>
+
   <div class="base-container" id="baseContainer">
-    <div id="container"></div>
+    <div class="container" id="container"></div>
     <div class="guide-container" id="guideContainer">
       <div class="guide-dot" id="guideDot" tabindex="0"></div>
     </div>
   </div>
 
   <nav class="util">
-    <div id="status">Mode</div>
-    <dl>
-      <dt>Setting</dt>
-      <dd>
-        <div class="row">
-          <input type="file" id="dotDesign">
-        </div>
-        <div class="row">
-          <div class="col w50">
-            <label for="setWidth">Width</label>
-            :
-            <input type="number" id="setWidth" value="300">
-          </div>
-          <div class="col w50">
-            <label for="setHeight">Height</label>
-            :
-            <input type="number" id="setHeight" value="300">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col w50">
-            <label for="">X</label>
-            :
-            <input type="number" value="0" id="bgX">
-          </div>
-          <div class="col w50">
-            <label for="">Y</label>
-            :
-            <input type="number" value="0" id="bgY">
-          </div>
-        </div>
-        <div class="row">
-          <label for="">BG Size</label>
+    <!-- <div id="status">Mode</div> -->
+    <div id="status">Key Insert</div>
+    <h2>Setting</h2>
+    <section>
+      <div class="row">
+        <input type="file" id="dotDesign">
+      </div>
+      <div class="row">
+        <div class="col w50">
+          <label for="setWidth">Width</label>
           :
-          <input type="number" value="300" id="bgW">
+          <input type="number" id="setWidth" value="300">
         </div>
-        <div class="row">
-          <label for="">Dot Size</label>:
-          <input type="number" value="5" id="dotSize">
-          <button onclick="dotSizeApply()">Dot Size Apply</button>
+        <div class="col w50">
+          <label for="setHeight">Height</label>
+          :
+          <input type="number" id="setHeight" value="300">
         </div>
+      </div>
+      <div class="row">
+        <div class="col w50">
+          <label for="">BG X</label>
+          :
+          <input type="number" value="0" id="bgX">
+        </div>
+        <div class="col w50">
+          <label for="">BG Y</label>
+          :
+          <input type="number" value="0" id="bgY">
+        </div>
+      </div>
+      <div class="row">
+        <label for="">BG Size</label>
+        :
+        <input type="number" value="300" id="bgW">
+      </div>
+      <div class="row">
+        <label for="">Dot Size</label>:
+        <input type="number" value="5" id="dotSize">
+        <button onclick="dotSizeApply()">Dot Size Apply</button>
+      </div>
+    </section>
+    <h2>Dot option</h2>
+    <section>
+      <!-- 
+        도트 칸 확장하는 기능 중지, 마우스 모드에서 기능 구현됨.
+        마우스 입력 기능 중지 함에 따라 잠정 보류
+      <div class="row">
+        <div class="col w50">
+          <label for="">Cell X</label>
+          :
+          <input type="number" value="1" id="dotCellX">
+        </div>
+        <div class="col w50">
+          <label for="">Cell Y</label>
+          :
+          <input type="number" value="1" id="dotCellY">
+        </div>
+      </div>-->
+      <div class="row">
+        <label for="dotColor">Color</label>:
+        <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
+      </div>
+      <div class="row">
+        <label for="">Pick</label>
+        :
+        <button onclick="openEyeDropper()">Color Picker</button>
+        <span id="result"></span>
+        <button onclick="insertPalette()">insert Palette</button>
+      </div>
+      <div class="row">
+        <label for="">Mode</label>:
+        <button onclick="createMode('key')">Key</button>
+        <button onclick="createMode('mouse')">Mouse</button>
+        <button onclick="createMode('delete')">Delete</button>
+        <button onclick="undo()">Undo</button>
+        <button onclick="guideReset()">Guide Reset</button>
+      </div>
+      <div class="row">
+        <label for="">All</label>:
+        <button onclick="paintFull()">Paint Full</button>
+        <button onclick="deleteAll()">Delete All</button>
+      </div>
+    </section>
+    <h2>Print</h2>
+    <section>
+      <div class="row">
+        <div class="col w50">
+          <label for="">Name</label>:
+          <input type="text" id="pixelName" placeholder="Name">
+        </div>
+        <div class="col w50">
+          <button onclick="codeCopy()">Copy Container</button>
+        </div>
+      </div>
+    </section>
 
-      </dd>
-    </dl>
-    <dl>
-      <dt>Dot option</dt>
-      <dd>
-        <div class="row">
-          <div class="col w50">
-            <label for="">Cell X</label>
-            :
-            <input type="number" value="1" id="dotCellX">
-          </div>
-          <div class="col w50">
-            <label for="">Cell Y</label>
-            :
-            <input type="number" value="1" id="dotCellY">
-          </div>
-        </div>
-        <div class="row">
-          <label for="dotColor">Color</label>:
-          <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
-        </div>
-        <div class="row">
-          <label for="">Pick</label>
-          :
-          <button onclick="openEyeDropper()">Color Picker</button>
-          <span id="result"></span>
-        </div>
-        <div class="row">
-          <label for="">Mode</label>:
-          <button onclick="createMode('key')">Key</button>
-          <button onclick="createMode('mouse')">Mouse</button>
-          <button onclick="createMode('delete')">Delete</button>
-          <button onclick="undo()">Undo</button>
-          <button onclick="guideReset()">Guide Reset</button>
-        </div>
-        <div class="row">
-        </div>
-      </dd>
-    </dl>
-    <dl>
-      <dt>Background</dt>
-      <dd>
-        <div class="row">
-        </div>
-        <div class="row">
-          <button onclick="paintFull()">Paint Full</button>
-          <button onclick="deleteAll()">Delete All</button>
-        </div>
-      </dd>
-    </dl>
-    <dl>
-      <dt>Print</dt>
-      <dd>
-        <div class="row">
-          <div class="col w50">
-            <label for="">Name</label>:
-            <input type="text" id="pixelName" placeholder="Name">
-          </div>
-          <div class="col w50">
-            <button onclick="codeCopy()">Copy Container</button>
-          </div>
-        </div>
-      </dd>
-    </dl>
+    <article class="palette" id="palette"></article>
   </nav>
+
 </main>
 
 <script src="./assets/js/coloris.min.js"></script>

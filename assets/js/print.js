@@ -23,5 +23,5 @@ export default function print() {
     })
   }
 
-  console.log('Module - print loaded');
+  console.log('Module loaded - Print');
 }
