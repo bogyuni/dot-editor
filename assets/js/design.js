@@ -1,5 +1,4 @@
-import { container } from "./setting.js";
-
+import { setValue, container } from "./setting.js";
 
 export default function design(size) {
   // 도안(배경이미지) 파일 업로드 선택자
@@ -11,7 +10,8 @@ export default function design(size) {
 
   // 도안 파일이 업로드 되면 실행
   dotDesign.addEventListener('change', function(e){
-    const file = e.target.files[0]
+    const file = e.target.files[0];
+    setValue.bgName = file.name;
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     // 이미지 파일이 업로드 되면 배경으로 설정하고 설정값을 입력한다
@@ -24,17 +24,18 @@ export default function design(size) {
     }
   });
 
-  // 도안(배경 이미지)을 온오프하는 함수들
-  window.designOnOff = () => {
+  // 도안(배경 이미지)을 온오프하는 함수
+  window.designMode = () => {
     if (designStatus === false) {
       container.style.backgroundImage = designBackground;
-      document.getElementById('designOnOff').innerText = 'Design Off';
+      document.getElementById('designMode').innerText = 'Design Off';
     } else {
       container.style.backgroundImage = '';
-      document.getElementById('designOnOff').innerText = 'Design On';
+      document.getElementById('designMode').innerText = 'Design On';
     }
     designStatus = !designStatus;
   }
 
-  console.log('Module loaded - Design');
 }
+
+console.log('Module loaded - Design');

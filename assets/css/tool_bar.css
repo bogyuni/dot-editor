@@ -1,0 +1,53 @@
+.tool-bar {
+  padding: 0.5em;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid #ccc;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: var(--toolbar-height);
+}
+.tool-bar .status {
+  font-size: 2em;
+  font-weight: bold;
+  font-style: italic;
+  color: rgb(2, 112, 229);
+  display: inline-block;
+}
+.tool-bar .status.error {
+  color: #c21c1c;
+}
+
+.tool-bar .current-scale {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0 10px;
+  line-height: 28px;
+  background-color: #fff;
+  color: #c21c1c;
+  font-weight: bold;
+}
+
+.key-info {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  border: 1px solid #ccc;
+  border-left: 0;
+  background-color: #eee;
+}
+
+.key-info li {
+  list-style: none;
+  padding: 10px;
+}
+.key-info strong {
+  font-size: 20px;
+}
+.key-info p {
+  font-size: 11px;
+  color: #555;
+}

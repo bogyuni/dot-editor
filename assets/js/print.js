@@ -12,8 +12,9 @@ export default function print() {
       pixelName = pixelNameVal;
     }
 
+    const dotInfo = `<input type="hidden" class="dot-info" data-width="${setValue.baseWidth}" data-height="${setValue.baseHeight}" data-bgname="${setValue.bgName}" data-bgx="${setValue.bgX}" data-bgy="${setValue.bgY}" data-bgw="${setValue.bgW}" data-dotsize="${setValue.dotSize}" />`;
     const cssAdd = `<style>.${pixelName} > .dot{position:absolute;width:${setValue.dotSize}px !important;height:${setValue.dotSize}px !important;}</style>`;
-    const codeHTML = `${cssAdd}\n<div class="${pixelName}" style="overflow:hidden;position:relative;width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;">${container.innerHTML}</div>`;
+    const codeHTML = `${dotInfo}\n${cssAdd}\n<div class="${pixelName} dot-base" style="overflow:hidden;position:relative;width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;">${container.innerHTML}</div>`;
     navigator.clipboard.writeText(codeHTML)
     .then(() => {
       console.log('Copied to clipboard : ' + codeHTML);
@@ -23,5 +24,6 @@ export default function print() {
     })
   }
 
-  console.log('Module loaded - Print');
 }
+
+console.log('Module loaded - Print');

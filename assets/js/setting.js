@@ -1,5 +1,3 @@
-export {colorisPliugin, dotColor, setValue, container, baseContainer, guideContainer, createDot};
-
 const colorisPliugin = () => {
   // 컬러픽커 플러그인 설정
   Coloris({
@@ -25,11 +23,17 @@ const setValue = {
   dotSize: 5,
   dotCellX: 1,
   dotCellY: 1,
+  bgX: 0,
+  bgY: 0,
+  bgW: 300,
+  bgName: '',
 };
 
+const baseContainer = document.getElementById('baseContainer');
 const container = document.getElementById('container');
 const guideContainer = document.getElementById('guideContainer');
-const baseContainer = document.getElementById('baseContainer');
+// 가이드 커서 선택자
+const guideDot = document.getElementById('guideDot');
 
 // 컨테이너 사이즈 조정을 위한 인풋 선택자
 const setWidth = document.getElementById('setWidth');
@@ -50,12 +54,15 @@ const bgX = document.getElementById('bgX');
 const bgY = document.getElementById('bgY');
 const bgW = document.getElementById('bgW');
 bgX.addEventListener('change', function(e){
+  setValue.bgX = e.target.value;
   container.style.backgroundPositionX = e.target.value+'px';
 });
 bgY.addEventListener('change', function(e){
+  setValue.bgY = e.target.value;
   container.style.backgroundPositionY = e.target.value+'px';
 });
 bgW.addEventListener('change', function(e){
+  setValue.bgW = e.target.value;
   container.style.backgroundSize = e.target.value+'px';
 });
 
@@ -63,8 +70,8 @@ bgW.addEventListener('change', function(e){
 const dotSize = document.getElementById('dotSize');
 // 도트 사이즈 적용 함수
 window.dotSizeApply = () => {
-  document.getElementById('guideDot').style.top = '0px';
-  document.getElementById('guideDot').style.left = '0px';
+  guideDot.style.top = '0px';
+  guideDot.style.left = '0px';
 
   setValue.dotSize = parseInt(dotSize.value);
   document.body.insertAdjacentHTML('beforeend',
@@ -99,5 +106,7 @@ function createDot(x, y, color) {
   container.append(dot);
 }
 
+
+export {colorisPliugin, dotColor, setValue, container, baseContainer, guideContainer, guideDot, createDot};
 
 console.log('Module loaded - Setting');

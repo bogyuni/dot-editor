@@ -1,9 +1,6 @@
-import { dotColor, setValue, container, baseContainer, createDot} from "./setting.js";
+import { dotColor, setValue, container, baseContainer, guideDot, createDot } from "./setting.js";
 
-export default btnFn;
-
-function btnFn () {
-
+export default function btnFn () {
   // 컨테이너 스케일 조절 값
   let scaleVal = 2;
   window.scaleRegulate = (pos) => {
@@ -16,7 +13,7 @@ function btnFn () {
         baseContainer.style.scale = scaleVal;
       }
     }
-    document.getElementById('sacleCurrent').innerText = scaleVal.toFixed(1);
+    document.getElementById('currentSacle').innerText = scaleVal.toFixed(1);
   }
 
   // 메뉴 접기 펼치기
@@ -33,8 +30,8 @@ function btnFn () {
 
   // 가이드 커서 리셋
   window.guideReset = () => {
-    document.getElementById('guideDot').style.top = '0px';
-    document.getElementById('guideDot').style.left = '0px';
+    guideDot.style.top = '0px';
+    guideDot.style.left = '0px';
   }
 
   // 컬러 픽커 찍는 함수
@@ -47,7 +44,6 @@ function btnFn () {
     }
 
     const eyeDropper = new EyeDropper();
-
     eyeDropper
       .open()
       .then((result) => {
@@ -69,23 +65,23 @@ function btnFn () {
   }
 
   // 한가지 색상으로 모든 도트를 채우는 함수
-window.paintFull = () => {
-  const confirmCheck = confirm('Really?');
-  if (confirmCheck) {
-    container.innerHTML = '';
-    const dotW = setValue.dotSize;
-    const dotH = setValue.dotSize;
-    const rowMax = setValue.baseWidth / dotW;
-    const colMax = setValue.baseHeight / dotH;
-    for (let i = 0; i < colMax; i++) {
-      for (let j = 0; j < rowMax; j++) {
-        createDot(dotW*j, dotH*i, dotColor.value);
+  window.paintFull = () => {
+    const confirmCheck = confirm('Really?');
+    if (confirmCheck) {
+      container.innerHTML = '';
+      const dotW = setValue.dotSize;
+      const dotH = setValue.dotSize;
+      const rowMax = setValue.baseWidth / dotW;
+      const colMax = setValue.baseHeight / dotH;
+      for (let i = 0; i < colMax; i++) {
+        for (let j = 0; j < rowMax; j++) {
+          createDot(dotW*j, dotH*i, dotColor.value);
+        }
       }
     }
   }
+
+  
 }
 
-
-
-  console.log('Module loaded - Button function');
-}
+console.log('Module loaded - Button function');

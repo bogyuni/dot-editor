@@ -1,110 +1,51 @@
-import {colorisPliugin, dotColor, setValue, container, baseContainer, guideContainer, createDot} from './setting.js';
+import { colorisPliugin, dotColor, setValue, container, baseContainer, guideContainer, guideDot, createDot } from './setting.js';
 import design from './design.js';
 import print from './print.js';
 import btnFn from './btn_fn.js';
+import dotLoad from './dot_load.js';
 
 colorisPliugin();
 design(setValue.baseWidth);
 print();
 btnFn();
+dotLoad();
 
-// 가이드 커서 이동 가능
-let cellMoveStatus = true;
 // 셀의 데이터
 const cellMemory = [];
 const cellDom = [];
 let cellCount = 0;
 
-// 마우스 입력/지우기 온오프 값
-let insertMouseStatus = false;
-// 키보드 입력 모드 온오프 값
+// 입력 모드 온오프 값
 let insertKeyStatus = true;
+// 마우스 드래그 상태
+let mouseDrag = false;
 // 가이드 컨테이너 온오프 값
 let guideContainerStatus = true;
-// 가이드 커서 선택자
-const guideDot = document.getElementById('guideDot');
-
-// (마우스/키) 입력 모드, 삭제 모드로 변경
+// 가이드 커서 이동 가능
+let cellMoveStatus = true;
+// 무브 색칠 모드
+let movePaintStatus = false;
+// 현재 상태 확인
+const statusText = document.getElementById('status')
+// 입력 모드, 삭제 모드로 변경
 window.createMode = (mode) => {
-  if (mode === 'mouse') {
-    alert('마우스 기능 중지');
-    return;
-    guideContainerStatus = false;
-    guideContainer.style.display = 'none';
-    cellMoveStatus = false;
-    insertMouseStatus = true;
-    insertKeyStatus = false;
-    document.getElementById('status').innerText = 'Mouse Insert';
-  } else if (mode === 'key') {
-    guideContainerStatus = true;
-    guideContainer.style.display = 'block';
-    cellMoveStatus = true;
-    insertMouseStatus = false;
+  if (mode === 'key') {
     insertKeyStatus = true;
-    document.getElementById('status').innerText = 'Key Insert';
+    movePaintStatus = false;
+    statusText.innerText = 'Insert paint mode';
+  } else if (mode === 'move') {
+    insertKeyStatus = true;
+    movePaintStatus = true;
+    statusText.innerText = 'Move paint mode';
   } else if (mode === 'delete') {
-    cellMoveStatus = true;
-    insertMouseStatus = false;
     insertKeyStatus = false;
-    document.getElementById('status').innerText = 'Delete Mode';
+    movePaintStatus = false;
+    statusText.innerText = 'Delete mode';
   }
 }
 
-// 마우스 클릭 입력 함수
-function insertMouse(e) {
-  // 도트가 찍힐 위치값 지정
-  const posX = e.offsetX;
-  const posY = e.offsetY;
-  const dotX = Math.floor(posX / setValue.dotSize) * setValue.dotSize;
-  const dotY = Math.floor(posY / setValue.dotSize) * setValue.dotSize;
-
-  // 도트 입력 상태일 때
-  if (insertMouseStatus === true) {
-    // 클릭 위치가 컨테이너일 때 즉 도트를 찍지 않았으면 도트를 생성
-    if (e.target === container) {
-      for (let i = 0; i < setValue.dotCellX; i++) {
-        for (let j = 0; j < setValue.dotCellY; j++) {
-          createDot(dotX + (setValue.dotSize * i), dotY + (setValue.dotSize * j), dotColor.value);
-        }
-      }
-    // 도트를 찍었다면 해당 도트의 생삭을 변경한다
-    } else {
-      e.target.style.backgroundColor = dotColor.value;
-    }
-  // 도트 지우기 상태일 때
-  } else {
-    // 컨테이너를 클릭 하지 않은 상태 즉 도트를 클릭 했을 때만 해당 도트를 삭제
-    if (e.target !== container) {
-    //  container.removeChild(e.target);
-
-      const dotIdText = e.target.offsetLeft.toString() + e.target.offsetTop.toString();
-
-      console.log(
-        dotIdText,
-        e.target.offsetLeft.toString(),
-        e.target.offsetTop.toString(),
-
-        );
-
-      // const dotIdText = guideDot.offsetLeft.toString() + guideDot.offsetTop.toString();
-      const thisCellNum = cellMemory.indexOf(dotIdText);
-      console.log(thisCellNum);
-
-      // container.removeChild(container.children[thisCellNum]);
-      // cellMemory.splice(thisCellNum, 1);
-      // cellDom.splice(thisCellNum, 1);
-      // cellCount--;
-
-
-    // 도트가 아닌 대상을 클릭 하면 안내문구 출력
-    } else {
-      console.log('삭제 대상이 없습니다');
-    }
-  }
-}
-
-// 키보드 스페이스바 입력 함수
-function insertKey() {
+// 키보드 입력 함수
+function insertKey () {
   const dotIdText = guideDot.offsetLeft.toString() + guideDot.offsetTop.toString();
   const thisCellNum = cellMemory.indexOf(dotIdText);
   // 키 입력 상태
@@ -132,33 +73,50 @@ function insertKey() {
   }
 }
 
-// 컨테이너 클릭할 때 마다 생성된 도트를 입력
-/* 마우스 입력 기능 중지
-  1. 효율성 떨어짐,
-  2. 키 입력 모드와 상호 보완 스펙 추가, 1번의 이유로 진행 보류
-  container.addEventListener('click', insertMouse);*/
+// 가이드 온/오프 함수
+function guideMode () {
+  if (guideContainerStatus === true) {
+    guideContainer.style.display = 'none';
+  } else {
+    guideContainer.style.display = 'block';
+  }
+  guideContainerStatus = !guideContainerStatus;
+}
 
 // 키보드 입력 이벤트
 window.onkeydown = (e) => {
   const key = e.key || e.keyCode;
+  // console.log(key);
+
+  if (isEnglish(key) === false){
+    statusText.innerText = '영문이 아닙니다.';
+    statusText.classList.add('error');
+  } else {
+    statusText.classList.remove('error');
+  }
+
   if (key === 'k') {
     createMode('key');
   } else if (key === 'm') {
-    createMode('mouse');
+    createMode('move');
   } else if (key === 'd') {
     createMode('delete');
   } else if (key === 'Escape') {
     guideDot.focus();
   } else if (key === 'g') {
-    if (guideContainerStatus === true) {
-      guideContainer.style.display = 'none';
-    } else {
-      guideContainer.style.display = 'block';
-    }
-    guideContainerStatus = !guideContainerStatus;
+    guideMode();
+  } else if (key === 'o') {
+    designMode();
+  } else if (key === '+' || key === '=') {
+    scaleRegulate('up');
+  } else if (key === '-' || key === '_') {
+    scaleRegulate('down');
+  } else if (key === 'c') {
+    openEyeDropper();
+  } else if (key === ' ') {
+    mouseDrag = true;
+    baseContainer.classList.add('grab');
   }
-
-  // console.log(key);
 
   // cell move 인서트 모드
   if (cellMoveStatus === true) {
@@ -172,19 +130,87 @@ window.onkeydown = (e) => {
     } else if (key === 'ArrowLeft') {
       guideDot.style.left = guideDot.offsetLeft - setValue.dotSize + 'px';
     }
-    // 스페이스 키 입력
-    else if (key === ' ') {
+    // 도트 입력
+    else if (key === 'a') {
       insertKey();
     }
     // 입력 셀 취소
     else if (key === 'Backspace' || key === 'Delete') {
       undo();
     }
+    // 무브 페인트 입력
+    if (movePaintStatus === true && (key === 'ArrowUp' || key === 'ArrowRight' || key === 'ArrowDown' || key === 'ArrowLeft')) {
+      insertKey();
+    }
   } else {
     console.log('Cell Move : false');
   }
+
+  
 };
 
+/**
+ * 영문입력 모드 확인하는 함수
+ * @param {string} char 입력받은 키값
+ * @returns 특문은 예외처리하고, 영문이 아닐 때는 체크하여 status에 안내한다.
+ */
+function isEnglish(char) {
+  const exceptionList = ['-', '=', '_', '+', ' '];
+  if (exceptionList.indexOf(char) > -1) {
+    return;
+  }
+  const code = char.charCodeAt(0);
+  return ((code >= 65 && code <= 90) || (code >= 97 && code <= 122)); // A-Z and a-z range
+}
+
+// 키 업 이벤트
+window.onkeyup = (e) => {
+  const key = e.key || e.keyCode;
+  if (key === ' ') {
+    mouseDrag = false;
+    baseContainer.classList.remove('grab');
+    baseContainer.classList.remove('grabbing');
+  }
+}
+
+// down mouse point 
+const downMousePos = {
+  x: 0,
+  y: 0,
+}
+const downBasePos = {
+  x: 0,
+  y: 0,
+}
+let downMouseCheck = false;
+
+// 베이스 드래그 기능
+baseContainer.onmousedown = (e) => {
+  if (mouseDrag === true) {
+    downMouseCheck = true;
+    downMousePos.x = e.clientX;
+    downBasePos.x = baseContainer.offsetLeft;
+    downMousePos.y = e.clientY;
+    downBasePos.y = baseContainer.offsetTop;
+    baseContainer.classList.remove('grab');
+    baseContainer.classList.add('grabbing');
+  }
+}
+baseContainer.onmousemove = (e) => {
+  if (mouseDrag === true && downMouseCheck === true) {
+    const setLeft = e.clientX - downMousePos.x + downBasePos.x;
+    const setTop = e.clientY - downMousePos.y + downBasePos.y;
+    baseContainer.style.left = setLeft+'px';
+    baseContainer.style.top = setTop+'px';
+  }
+}
+baseContainer.onmouseup = (e) => {
+  if (mouseDrag === true) {
+    downMouseCheck = false;
+    baseContainer.classList.add('grab');
+    baseContainer.classList.remove('grabbing');
+  }
+}
 
 // 마지막에 입력된 도트를 취소함
 window.undo = () => {
@@ -197,16 +223,18 @@ window.undo = () => {
     alert('취소 할 대상이 없음');
   }
 }
+
 // 모든 도트를 지우는 함수
 window.deleteAll = () => {
   const confirmCheck = confirm('Really?');
   if (confirmCheck) {
     container.innerHTML = '';
-    cellMemory = [];
-    cellDom = [];
+    cellMemory.length = 0;
+    cellDom.length = 0;
     cellCount = 0;
   }
 }
+
 // input 입력 중엔 커서 정지
 const inputTag = document.querySelectorAll('input');
 for (let i = 0; i < inputTag.length; i++) {

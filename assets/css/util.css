@@ -1,0 +1,83 @@
+.util {
+  padding: 1em;
+  position: fixed;
+  right: 0;
+  top: var(--toolbar-height);
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-right: 0;
+  background-color: #eee;
+}
+.util .util-wrap {
+
+}
+.util h2 {
+  font-size: 1.4em;
+  margin-bottom: 0.4em;
+  cursor: pointer;
+}
+.util section {
+  overflow: hidden;
+  border-bottom : 1px solid #ccc;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+.util section:last-child {
+  border: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.util h2.hidden {
+  margin-bottom: 10px;
+}
+.util h2.hidden + section {
+  height: 0px;
+  padding-bottom: 0px;
+}
+.util .row {
+  display: flex;
+  padding:0.4em;
+}
+.util .col {
+  display: flex;
+  padding-right: 5px;
+}
+.util .col:last-child {
+  padding-left: 0;
+  padding-left: 5px;
+}
+.util label {
+  width: 60px;
+}
+.util input {
+  margin-left: 4px;
+}
+
+.palette-wrap {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  padding: 10px;
+  margin: 10px 10px 0 0;
+  width: 72px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #eee;
+}
+.palette-wrap .chip {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+.palette-wrap .chip:nth-child(2n) {
+  margin-left: 10px;
+}
+.palette-wrap h2 {
+  font-size: 1em;
+}
+
+#palette {
+}
