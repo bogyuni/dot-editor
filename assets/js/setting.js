@@ -98,11 +98,11 @@ dotCellY.addEventListener('change', function(e) {
 
 // 도트 생성 함수
 function createDot(x, y, color) {
-  const dot = document.createElement('div');
-  dot.classList.add('dot');
+  const dot = document.createElement('i');
+  // dot.classList.add('dot');
   dot.style.left = x+'px';
   dot.style.top = y+'px';
-  dot.style.backgroundColor = color;
+  dot.style.background = color;
   container.append(dot);
 }
 

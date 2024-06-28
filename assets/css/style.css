@@ -28,7 +28,7 @@
   background-color: #ff00ff;
   overflow: hidden;
 }
-.dot {
+.container > i {
   width:5px;
   height:5px;
   background: #000;
