@@ -26,8 +26,8 @@ let cellMoveStatus = true;
 // 무브 색칠 모드
 let movePaintStatus = false;
 // 현재 상태 확인
-const statusText = document.getElementById('status')
-// 입력 모드, 삭제 모드로 변경
+const statusText = document.getElementById('status');
+// 입력 모드, 이동 모드, 삭제 모드로 변경
 window.createMode = (mode) => {
   if (mode === 'key') {
     insertKeyStatus = true;
@@ -76,9 +76,9 @@ function insertKey () {
 // 가이드 온/오프 함수
 function guideMode () {
   if (guideContainerStatus === true) {
-    guideContainer.style.display = 'none';
+    guideContainer.classList.add('none-back');
   } else {
-    guideContainer.style.display = 'block';
+    guideContainer.classList.remove('none-back');
   }
   guideContainerStatus = !guideContainerStatus;
 }
@@ -86,7 +86,6 @@ function guideMode () {
 // 키보드 입력 이벤트
 window.onkeydown = (e) => {
   const key = e.key || e.keyCode;
-  // console.log(key);
 
   if (isEnglish(key) === false){
     statusText.innerText = '영문이 아닙니다.';
@@ -95,14 +94,14 @@ window.onkeydown = (e) => {
     statusText.classList.remove('error');
   }
 
-  if (key === 'k') {
+  if (key === 'i') {
     createMode('key');
   } else if (key === 'm') {
     createMode('move');
   } else if (key === 'd') {
     createMode('delete');
   } else if (key === 'Escape') {
-    guideDot.focus();
+    guideReset();
   } else if (key === 'g') {
     guideMode();
   } else if (key === 'o') {
@@ -238,10 +237,10 @@ window.deleteAll = () => {
 // input 입력 중엔 커서 정지
 const inputTag = document.querySelectorAll('input');
 for (let i = 0; i < inputTag.length; i++) {
-  inputTag[i].addEventListener('focusin', function(e) {
+  inputTag[i].addEventListener('focusin', () => {
     cellMoveStatus = false;
   });
-  inputTag[i].addEventListener('focusout', function(e) {
+  inputTag[i].addEventListener('focusout', () => {
     cellMoveStatus = true;
   });
 }

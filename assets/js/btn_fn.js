@@ -16,6 +16,17 @@ export default function btnFn () {
     document.getElementById('currentSacle').innerText = scaleVal.toFixed(1);
   }
 
+  // 셋팅창 닫기/열기
+  window.settingWindow = (target) => {
+    if (document.querySelector('.util').classList.contains('off')) {
+      document.querySelector('.util').classList.remove('off');
+      target.innerText = 'Setting OFF';
+    } else {
+      document.querySelector('.util').classList.add('off');
+      target.innerText = 'Setting ON';
+    }
+  }
+
   // 메뉴 접기 펼치기
   const secTit = document.querySelectorAll('h2');
   for (let i = 0; i < secTit.length; i++) {
@@ -81,7 +92,10 @@ export default function btnFn () {
     }
   }
 
-  
+  // 컨테이너 배경 색 변경
+  window.containerBgColor = (color) => {
+    container.style.backgroundColor = color;
+  }
 }
 
 console.log('Module loaded - Button function');

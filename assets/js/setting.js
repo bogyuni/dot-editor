@@ -6,10 +6,12 @@ const colorisPliugin = () => {
   Coloris.setInstance('.coloris', {
     theme: 'pill',
     themeMode: 'dark',
+    format: 'hex',
     formatToggle: true,
     closeButton: true,
     clearButton: true,
-    swatches: [ '#067bc2', '#84bcda', '#80e377', '#ecc30b', '#f37748', '#d56062' ]
+    swatches: [ '#067bc2', '#84bcda', '#80e377', '#ecc30b', '#f37748', '#d56062' ],
+    defaultColor: '#000000',
   });
 }
 
@@ -20,7 +22,7 @@ const dotColor = document.getElementById('dotColor');
 const setValue = {
   baseWidth: 300,
   baseHeight: 300,
-  dotSize: 5,
+  dotSize: 4,
   dotCellX: 1,
   dotCellY: 1,
   bgX: 0,
@@ -66,7 +68,7 @@ bgW.addEventListener('change', function(e){
   container.style.backgroundSize = e.target.value+'px';
 });
 
-// 도트의 사이즈 지정, 기본 값은 5
+// 도트의 사이즈 지정, 기본 값은 4
 const dotSize = document.getElementById('dotSize');
 // 도트 사이즈 적용 함수
 window.dotSizeApply = () => {
@@ -78,7 +80,7 @@ window.dotSizeApply = () => {
     `<style>
       .guide-container{background-size: ${setValue.dotSize}px ${setValue.dotSize}px, ${setValue.dotSize}px ${setValue.dotSize}px;}
       .guide-container .guide-dot{width:${setValue.dotSize}px;height:${setValue.dotSize}px;}
-      .dot{width:${setValue.dotSize}px;height:${setValue.dotSize}px;}
+      .container > i{width:${setValue.dotSize}px;height:${setValue.dotSize}px;}
     </style>`
   );
 }
@@ -99,7 +101,6 @@ dotCellY.addEventListener('change', function(e) {
 // 도트 생성 함수
 function createDot(x, y, color) {
   const dot = document.createElement('i');
-  // dot.classList.add('dot');
   dot.style.left = x+'px';
   dot.style.top = y+'px';
   dot.style.background = color;

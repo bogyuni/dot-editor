@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Dot Editor - pixel create</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./assets/favicon.ico">
   <link rel="stylesheet" href="./assets/css/coloris.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
@@ -15,24 +16,25 @@
     <button onclick="scaleRegulate('down')">Sacle Down</button>
     <button onclick="scaleRegulate('up')">Sacle Up</button>
     <span class="current-scale" id="currentSacle">2.0</span>
+    <button onclick="settingWindow(this)">Setting OFF</button>
 
     <aside class="key-info">
       <ul>
         <li>
-          <strong>K</strong>
-          <p>: Insert paint</p>
+          <strong>I</strong>
+          <p>: Insert mode</p>
         </li>
         <li>
           <strong>M</strong>
-          <p>: Move paint</p>
+          <p>: Move mode</p>
         </li>
         <li>
           <strong>D</strong>
-          <p>: Delete</p>
+          <p>: Delete mode</p>
         </li>
         <li>
           <strong>A</strong>
-          <p>: Create</p>
+          <p>: Create Dot</p>
         </li>
         <li>
           <strong>O</strong>
@@ -51,12 +53,16 @@
           <p>: Scale down</p>
         </li>
         <li>
+          <strong>Spacebar</strong>
+          <p>: Grab move</p>
+        </li>
+        <li>
           <strong>BACK</strong>
           <p>: Undo</p>
         </li>
         <li>
           <strong>ESC</strong>
-          <p>: Focus</p>
+          <p>: Guide reset</p>
         </li>
         <li>
           <strong>G</strong>
@@ -83,35 +89,38 @@
         <div class="row">
           <div class="col w50">
             <label for="setWidth">Width</label>
-            :
             <input type="number" id="setWidth" value="300">
           </div>
           <div class="col w50">
             <label for="setHeight">Height</label>
-            :
             <input type="number" id="setHeight" value="300">
           </div>
         </div>
         <div class="row">
           <div class="col w50">
             <label for="">BG X</label>
-            :
             <input type="number" value="0" id="bgX">
           </div>
           <div class="col w50">
             <label for="">BG Y</label>
-            :
             <input type="number" value="0" id="bgY">
           </div>
         </div>
         <div class="row">
-          <label for="">BG Size</label>
-          :
-          <input type="number" value="300" id="bgW">
+          <div class="col w50">
+            <label for="">BG Size</label>
+            <input type="number" value="300" id="bgW">
+          </div>
+          <div class="col w50">
+            <label for="">BG Color</label>
+            <button class="btn-bg-c" onclick="containerBgColor('#ff00ff')" style="background-color:#ff00ff;"></button>
+            <button class="btn-bg-c" onclick="containerBgColor('#ffffff')" style="background-color:#fff;"></button>
+            <button class="btn-bg-c" onclick="containerBgColor('#000000')" style="background-color:#000;"></button>
+          </div>
         </div>
         <div class="row">
-          <label for="">Dot Size</label>:
-          <input type="number" value="5" id="dotSize">
+          <label for="">Dot Size</label>
+          <input type="number" value="4" id="dotSize">
           <button onclick="dotSizeApply()">Dot Size Apply</button>
         </div>
       </section>
@@ -133,18 +142,17 @@
           </div>
         </div>-->
         <div class="row">
-          <label for="dotColor">Color</label>:
-          <input type="text" id="dotColor" class="coloris" value="rgb(0, 0, 0)">
+          <label for="dotColor">Color</label>
+          <input type="text" id="dotColor" class="coloris" value="#000000">
         </div>
         <div class="row">
           <label for="">Pick</label>
-          :
           <button onclick="openEyeDropper()">Color Picker</button>
           <span id="result"></span>
           <button onclick="insertPalette()">insert Palette</button>
         </div>
         <div class="row">
-          <label for="">Mode</label>:
+          <label for="">Mode</label>
           <button onclick="createMode('key')">Key</button>
           <button onclick="createMode('mouse')">Mouse</button>
           <button onclick="createMode('delete')">Delete</button>
@@ -152,7 +160,7 @@
           <button onclick="guideReset()">Guide Reset</button>
         </div>
         <div class="row">
-          <label for="">All</label>:
+          <label for="">All</label>
           <button onclick="paintFull()">Paint Full</button>
           <button onclick="deleteAll()">Delete All</button>
         </div>
@@ -161,7 +169,7 @@
       <section>
         <div class="row">
           <div class="col w50">
-            <label for="">Name</label>:
+            <label for="">Name</label>
             <input type="text" id="pixelName" placeholder="Name">
           </div>
           <div class="col w50">
@@ -169,7 +177,7 @@
           </div>
         </div>
         <div class="row">
-            <label for="">Load</label>:
+            <label for="">Load</label>
             <input type="file" id="dotFile">
         </div>
       </section>
