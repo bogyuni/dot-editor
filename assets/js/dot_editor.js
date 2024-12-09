@@ -46,7 +46,7 @@ window.createMode = (mode) => {
 
 // 키보드 입력 함수
 function insertKey () {
-  const dotIdText = guideDot.offsetLeft.toString() + guideDot.offsetTop.toString();
+  const dotIdText = 'L'+guideDot.offsetLeft.toString() + 'T'+guideDot.offsetTop.toString();
   const thisCellNum = cellMemory.indexOf(dotIdText);
   // 키 입력 상태
   if (insertKeyStatus === true) {
