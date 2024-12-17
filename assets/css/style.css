@@ -58,7 +58,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  border: 1px dotted rgb(0, 255, 68);
+  background: rgba(0, 255, 68, 0.6);
   box-sizing: border-box;
 }
 

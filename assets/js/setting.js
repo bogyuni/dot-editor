@@ -29,6 +29,7 @@ const setValue = {
   bgY: 0,
   bgW: 300,
   bgName: '',
+  memory: ''
 };
 
 const baseContainer = document.getElementById('baseContainer');

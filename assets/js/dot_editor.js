@@ -71,6 +71,8 @@ function insertKey () {
       console.log('삭제할 대상이 없음');
     }
   }
+  setValue.memory = cellMemory;
+  console.log(setValue.memory);
 }
 
 // 가이드 온/오프 함수
