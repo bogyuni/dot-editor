@@ -11,7 +11,13 @@ btnFn();
 dotLoad();
 
 // 셀의 데이터
+// const cellMemory = [];
+
+console.log(setValue.memory);
+
 const cellMemory = [];
+cellMemory.push(setValue.memory);
+
 const cellDom = [];
 let cellCount = 0;
 
@@ -53,7 +59,8 @@ function insertKey () {
     if (cellMemory.includes(dotIdText) === false) {
       createDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
       const dots = document.querySelectorAll('.container i')[cellCount];
-      cellMemory[cellCount] = dotIdText;
+      // cellMemory[cellCount] = dotIdText;
+      cellMemory.push(dotIdText);
       cellDom[cellCount] = dots;
       cellCount++;
     } else {

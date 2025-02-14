@@ -45,8 +45,9 @@ export default function dotLoad() {
       dotSizeApply();
 
       container.insertAdjacentHTML('beforeend', dotBase.innerHTML);
-      console.log(dotInfo.value);
       setValue.memory = dotInfo.value;
+
+      console.log(setValue.memory);
     }
   });
 
