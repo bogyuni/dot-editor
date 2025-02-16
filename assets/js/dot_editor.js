@@ -59,8 +59,8 @@ function insertKey () {
     if (cellMemory.includes(dotIdText) === false) {
       createDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
       const dots = document.querySelectorAll('.container i')[cellCount];
-      // cellMemory[cellCount] = dotIdText;
-      cellMemory.push(dotIdText);
+      cellMemory[cellCount] = dotIdText;
+      // cellMemory.push(dotIdText);
       cellDom[cellCount] = dots;
       cellCount++;
     } else {
