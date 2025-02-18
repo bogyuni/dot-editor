@@ -1,6 +1,6 @@
 import { setValue, container, guideContainer } from "./setting.js";
 
-export default function dotLoad() {
+export default function fileLoad() {
   const dotFile = document.getElementById('dotFile');
   const loadedFile = document.getElementById('loadedFile');
 
@@ -18,6 +18,7 @@ export default function dotLoad() {
       const dotBase = document.querySelector('.dot-base');
       const dotInfo = document.querySelector('.dot-info');
 
+      // === 사이즈 정보 반영 ===
       setValue.baseWidth = parseInt(dotInfo.dataset.width);
       document.getElementById('setWidth').value = setValue.baseWidth;
       container.style.width = `${setValue.baseWidth}px`;
@@ -40,18 +41,30 @@ export default function dotLoad() {
       document.getElementById('bgW').value = setValue.bgW;
       container.style.backgroundSize = setValue.bgW+'px';
 
+      // 도트 사이즈 반영
       setValue.dotSize = parseInt(dotInfo.dataset.dotsize);
       document.getElementById('dotSize').value = setValue.dotSize;
       dotSizeApply();
 
+      // 기존 도트 삭제 후 새로운 도트 삽입
+      container.innerHTML = '';
       container.insertAdjacentHTML('beforeend', dotBase.innerHTML);
-      setValue.memory = dotInfo.value;
 
-      console.log(setValue.memory);
+      // 메모리 & DOM 초기화
+      setValue.memory.clear();
+      setValue.DOM.clear();
+      setValue.count = 0;
+
+      container.querySelectorAll('i').forEach(dot => {
+        const left = parseInt(dot.style.left);
+        const top = parseInt(dot.style.top);
+        const dotIdText = `L${left}T${top}`;
+        setValue.memory.set(dotIdText, setValue.count);
+        setValue.DOM.set(dotIdText, dot);
+        setValue.count++;
+      });
     }
   });
-
-  
 }
 
-console.log('Module loaded - Dot load');
+console.log('Module loaded - File load');

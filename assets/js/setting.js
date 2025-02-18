@@ -29,7 +29,9 @@ const setValue = {
   bgY: 0,
   bgW: 300,
   bgName: '',
-  memory: ''
+  count: 0,
+  memory: new Map(),  // 기존 배열([]) → Map() 으로 변경
+  DOM: new Map(),  // 기존 배열([]) → Map() 으로 변경
 };
 
 const baseContainer = document.getElementById('baseContainer');

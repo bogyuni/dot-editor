@@ -2,37 +2,23 @@ import { colorisPliugin, dotColor, setValue, container, baseContainer, guideCont
 import design from './design.js';
 import print from './print.js';
 import btnFn from './btn_fn.js';
-import dotLoad from './dot_load.js';
+import fileLoad from './fileload.js';
 
 colorisPliugin();
 design(setValue.baseWidth);
 print();
 btnFn();
-dotLoad();
+fileLoad();
 
-// 셀의 데이터
-// const cellMemory = [];
+let insertKeyStatus = true; // 입력 모드 온오프 값
+let mouseDrag = false; // 마우스 드래그 상태
+let guideContainerStatus = true; // 가이드 컨테이너 온오프 값
+let cellMoveStatus = true; // 가이드 커서 이동 가능
+let movePaintStatus = false; // 무브 색칠 모드
 
-console.log(setValue.memory);
-
-const cellMemory = [];
-cellMemory.push(setValue.memory);
-
-const cellDom = [];
-let cellCount = 0;
-
-// 입력 모드 온오프 값
-let insertKeyStatus = true;
-// 마우스 드래그 상태
-let mouseDrag = false;
-// 가이드 컨테이너 온오프 값
-let guideContainerStatus = true;
-// 가이드 커서 이동 가능
-let cellMoveStatus = true;
-// 무브 색칠 모드
-let movePaintStatus = false;
 // 현재 상태 확인
 const statusText = document.getElementById('status');
+
 // 입력 모드, 이동 모드, 삭제 모드로 변경
 window.createMode = (mode) => {
   if (mode === 'key') {
@@ -52,34 +38,42 @@ window.createMode = (mode) => {
 
 // 키보드 입력 함수
 function insertKey () {
-  const dotIdText = 'L'+guideDot.offsetLeft.toString() + 'T'+guideDot.offsetTop.toString();
-  const thisCellNum = cellMemory.indexOf(dotIdText);
+  // 오류를 줄이기 위해, Math.round 로 변경
+  // const dotIdText = 'L'+guideDot.offsetLeft.toString() + 'T'+guideDot.offsetTop.toString();
+  const dLeft = Math.round(guideDot.offsetLeft);
+  const dTop = Math.round(guideDot.offsetTop);
+  const dotIdText = `L${dLeft}T${dTop}`;
+  const thisCellNum = setValue.memory.get(dotIdText); // Map에서 바로 검색
+
+  if (thisCellNum === -1) {
+    console.warn(`[Error] 현재 위치 (${dotIdText})를 memory 배열에서 찾을 수 없음!`);
+    console.warn(`메모리 배열 내용:`, setValue.memory);
+  }
+
   // 키 입력 상태
-  if (insertKeyStatus === true) {
-    if (cellMemory.includes(dotIdText) === false) {
-      createDot(guideDot.offsetLeft, guideDot.offsetTop, dotColor.value);
-      const dots = document.querySelectorAll('.container i')[cellCount];
-      cellMemory[cellCount] = dotIdText;
-      // cellMemory.push(dotIdText);
-      cellDom[cellCount] = dots;
-      cellCount++;
+  if (insertKeyStatus) {
+    if (!setValue.memory.has(dotIdText)) {
+      createDot(dLeft, dTop, dotColor.value);
+      const dots = document.querySelectorAll('.container i')[setValue.count];
+      setValue.memory.set(dotIdText, setValue.count);
+      setValue.DOM.set(dotIdText, dots);
+      setValue.count++;
     } else {
-      cellDom[thisCellNum].style.backgroundColor = dotColor.value;
+      // 기존 입력된 닷이면 색상변경
+      setValue.DOM.get(dotIdText).style.backgroundColor = dotColor.value;
     }
   }
   // 키 삭제 상태
   else {
-    if (cellMemory.includes(dotIdText) === true) {
-      container.removeChild(container.children[thisCellNum]);
-      cellMemory.splice(thisCellNum, 1);
-      cellDom.splice(thisCellNum, 1);
-      cellCount--;
+    if (setValue.memory.has(dotIdText)) {
+      container.removeChild(setValue.DOM.get(dotIdText));
+      setValue.memory.delete(dotIdText);
+      setValue.DOM.delete(dotIdText);
+      setValue.count--;
     } else {
       console.log('삭제할 대상이 없음');
     }
   }
-  setValue.memory = cellMemory;
-  console.log(setValue.memory);
 }
 
 // 가이드 온/오프 함수
@@ -153,8 +147,6 @@ window.onkeydown = (e) => {
   } else {
     console.log('Cell Move : false');
   }
-
-  
 };
 
 /**
@@ -164,7 +156,7 @@ window.onkeydown = (e) => {
  */
 function isEnglish(char) {
   const exceptionList = ['-', '=', '_', '+', ' '];
-  if (exceptionList.indexOf(char) > -1) {
+  if (exceptionList.includes(char)) {
     return;
   }
   const code = char.charCodeAt(0);
@@ -181,15 +173,9 @@ window.onkeyup = (e) => {
   }
 }
 
-// down mouse point 
-const downMousePos = {
-  x: 0,
-  y: 0,
-}
-const downBasePos = {
-  x: 0,
-  y: 0,
-}
+// 커서와 베이스 위치값 셋
+const downMousePos = {x: 0, y: 0,}
+const downBasePos = {x: 0, y: 0,}
 let downMouseCheck = false;
 
 // 베이스 드래그 기능
@@ -212,7 +198,7 @@ baseContainer.onmousemove = (e) => {
     baseContainer.style.top = setTop+'px';
   }
 }
-baseContainer.onmouseup = (e) => {
+baseContainer.onmouseup = () => {
   if (mouseDrag === true) {
     downMouseCheck = false;
     baseContainer.classList.add('grab');
@@ -222,13 +208,26 @@ baseContainer.onmouseup = (e) => {
 
 // 마지막에 입력된 도트를 취소함
 window.undo = () => {
-  if (container.lastChild){
-    container.removeChild(container.lastChild);
-    cellMemory.pop();
-    cellDom.pop();
-    cellCount--;
+  if (setValue.DOM.size > 0) {
+    // 마지막 키 가져오기
+    const lastKey = Array.from(setValue.DOM.keys()).pop();
+
+    if (lastKey) {
+      // 마지막 입력 도트 가져오기
+      const lastDot = setValue.DOM.get(lastKey);
+
+      // DOM에서 제거
+      if (lastDot) container.removeChild(lastDot);
+
+      // 메모리에서 해당 위치 제거
+      setValue.memory.delete(lastKey);
+      setValue.DOM.delete(lastKey);
+
+      // 카운트 업데이트
+      setValue.count--;
+    }
   } else {
-    alert('취소 할 대상이 없음');
+    alert('취소할 대상이 없음');
   }
 }
 
@@ -237,9 +236,9 @@ window.deleteAll = () => {
   const confirmCheck = confirm('Really?');
   if (confirmCheck) {
     container.innerHTML = '';
-    cellMemory.length = 0;
-    cellDom.length = 0;
-    cellCount = 0;
+    setValue.memory.clear();
+    setValue.DOM.clear();
+    setValue.count = 0;
   }
 }
 
