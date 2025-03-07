@@ -97,9 +97,9 @@ window.onkeydown = (e) => {
     statusText.classList.remove('error');
   }
 
-  if (key === 'i') {
+  if (key === 'w') {
     createMode('key');
-  } else if (key === 'm') {
+  } else if (key === 'r') {
     createMode('move');
   } else if (key === 'd') {
     createMode('delete');
