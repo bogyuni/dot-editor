@@ -14,7 +14,7 @@ export default function print() {
 
     console.log(setValue.memory);
 
-    const dotInfo = `<input type="hidden" class="dot-info" data-width="${setValue.baseWidth}" data-height="${setValue.baseHeight}" data-bgname="${setValue.bgName}" data-bgx="${setValue.bgX}" data-bgy="${setValue.bgY}" data-bgw="${setValue.bgW}" data-dotsize="${setValue.dotSize}" value="${setValue.memory}" />`;
+    const dotInfo = `<input type="hidden" class="dot-info" data-width="${setValue.baseWidth}" data-height="${setValue.baseHeight}" data-bgname="${setValue.bgName}" data-bgx="${setValue.bgX}" data-bgy="${setValue.bgY}" data-bgw="${setValue.bgW}" data-dotsize="${setValue.dotSize}" data-dotqty="${setValue.dotQty}" value="${setValue.memory}" />`;
     const cssAdd = `<style>.${pixelName} i{position:absolute !important;width:${setValue.dotSize}px !important;height:${setValue.dotSize}px !important;}</style>`;
     const codeHTML = `<div class="${pixelName}">${dotInfo}${cssAdd}<div class="dot-base" style="overflow:hidden;position:relative;width:${setValue.baseWidth}px;height:${setValue.baseHeight}px;">${container.innerHTML}</div></div>`;
     const printCode = codeHTML.replace(/: |; |, |;"/g, (matched) => {

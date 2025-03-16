@@ -33,7 +33,11 @@ window.createMode = (mode) => {
     insertKeyStatus = false;
     movePaintStatus = false;
     statusText.innerText = 'Delete mode';
-  }
+  } else if (mode === 'd_move') {
+    insertKeyStatus = false;
+    movePaintStatus = true;
+    statusText.innerText = 'Move Delete mode';
+	}
 }
 
 // 키보드 입력 함수
@@ -49,6 +53,9 @@ function insertKey () {
     console.warn(`[Error] 현재 위치 (${dotIdText})를 memory 배열에서 찾을 수 없음!`);
     console.warn(`메모리 배열 내용:`, setValue.memory);
   }
+
+	setValue.dotQty = container.querySelectorAll('i').length;
+	document.querySelector('.dot-qty').innerText = 'Dots: ' + setValue.dotQty;
 
   // 키 입력 상태
   if (insertKeyStatus) {
@@ -103,6 +110,8 @@ window.onkeydown = (e) => {
     createMode('move');
   } else if (key === 'd') {
     createMode('delete');
+  } else if (key === 't') {
+    createMode('d_move');
   } else if (key === 'Escape') {
     guideReset();
   } else if (key === 'g') {
@@ -140,6 +149,7 @@ window.onkeydown = (e) => {
     else if (key === 'Backspace' || key === 'Delete') {
       undo();
     }
+
     // 무브 페인트 입력
     if (movePaintStatus === true && (key === 'ArrowUp' || key === 'ArrowRight' || key === 'ArrowDown' || key === 'ArrowLeft')) {
       insertKey();

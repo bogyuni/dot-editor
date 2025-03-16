@@ -67,14 +67,6 @@ export default function btnFn () {
       });
   }
 
-  // 현재 지정 컬러 저장하기
-  window.insertPalette = () => {
-    const chip = document.createElement('i');
-    chip.classList.add('chip');
-    chip.style.backgroundColor = dotColor.value;
-    document.getElementById('palette').append(chip);
-  }
-
   // 한가지 색상으로 모든 도트를 채우는 함수
   window.paintFull = () => {
     const confirmCheck = confirm('Really?');

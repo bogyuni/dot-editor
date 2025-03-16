@@ -25,6 +25,7 @@ const setValue = {
   dotSize: 4,
   dotCellX: 1,
   dotCellY: 1,
+	dotQty: 0,
   bgX: 0,
   bgY: 0,
   bgW: 300,

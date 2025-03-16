@@ -62,33 +62,3 @@
 .util .btn-bg-c {
   width: 40px;
 }
-
-
-.palette-wrap {
-  position: absolute;
-  right: 100%;
-  top: 0;
-  padding: 10px;
-  margin: 10px 10px 0 0;
-  width: 72px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #eee;
-}
-.palette-wrap .chip {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  vertical-align: top;
-  margin-bottom: 10px;
-}
-.palette-wrap .chip:nth-child(2n) {
-  margin-left: 10px;
-}
-.palette-wrap h2 {
-  font-size: 1em;
-}
-
-#palette {
-}

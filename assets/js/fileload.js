@@ -50,6 +50,8 @@ export default function fileLoad() {
       container.innerHTML = '';
       container.insertAdjacentHTML('beforeend', dotBase.innerHTML);
 
+			document.querySelector('.dot-qty').innerText = 'Dots: ' + dotInfo.dataset.dotqty;
+
       // 메모리 & DOM 초기화
       setValue.memory.clear();
       setValue.DOM.clear();

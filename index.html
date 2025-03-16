@@ -17,6 +17,7 @@
     <button onclick="scaleRegulate('up')">Sacle Up</button>
     <span class="current-scale" id="currentSacle">2.0</span>
     <button onclick="settingWindow(this)">Setting OFF</button>
+		<span class="dot-qty"></span>
 
     <aside class="key-info">
       <ul>
@@ -26,11 +27,15 @@
         </li>
         <li>
           <strong>R</strong>
-          <p>: Move mode</p>
+          <p>: Move Write</p>
         </li>
         <li>
           <strong>D</strong>
           <p>: Delete mode</p>
+        </li>
+        <li>
+          <strong>T</strong>
+          <p>: Delete Move</p>
         </li>
         <li>
           <strong>A</strong>
@@ -149,7 +154,6 @@
           <label for="">Pick</label>
           <button onclick="openEyeDropper()">Color Picker</button>
           <span id="result"></span>
-          <button onclick="insertPalette()">insert Palette</button>
         </div>
         <div class="row">
           <label for="">Mode</label>
@@ -182,11 +186,6 @@
         </div>
       </section>
     </div>
-
-    <article class="palette-wrap">
-      <h2>Palette</h2>
-      <div id="palette"></div>
-    </article>
   </nav>
 </main>
 <div id="loadedFile"></div>
